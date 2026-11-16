@@ -896,3 +896,47 @@ balance_history:
 'Cancelled': Storniert
 'Withdrawn': Zurückgezogen
 'Settings updated successfully!': Einstellungen gespeichert!
+'Absence Balance Reset Day': Stichtag der Zurücksetzung
+'Annual Leave Allowance': Jahresanspruch
+'Approved By': Genehmigt von
+'Background Color': Hintergrundfarbe
+'Birth Date': Geburtsdatum
+'Border Color': Rahmenfarbe
+'Contract Started At': Eintrittsdatum
+'Country Code': Ländercode
+'Country Name': Land
+'Created At': Erstellt am
+'Current Leave Balance': Aktueller Saldo
+'Email': E-Mail
+'First Name': Vorname
+'Has Celebrate Work Anniversary': Dienstjubiläum feiern
+'Holidays': Feiertage
+'Icon': Symbol
+'Is Active': Aktiv
+'Is Affecting Balance': Wird vom Saldo abgezogen
+'Last Name': Nachname
+'Last Synced Year': Zuletzt abgeglichenes Jahr
+'Manager': Vorgesetzte Person
+'Name': Name
+'Plain Password': Passwort
+'Profile Image Url': Profilbild
+'Roles': Rollen
+'Slack Status Emoji': Emoji für den Slack-Status
+'Sort': Reihenfolge
+'Text Color': Textfarbe
+'Work Days': Arbeitstage
+'Working Days': Arbeitstage
+'Absence Balance': Saldo
+'Contract Details': Anstellung
+'Employee of record': Anstellung
+'Profile': Profil
+'Security': Sicherheit
+'Have the employee enabled work anniversaries celebrations.': Legt fest, ob das Dienstjubiläum dieser Person gefeiert wird.
+'The direct manager of this employee.': Die direkt vorgesetzte Person.
+'Monday': Montag
+'Tuesday': Dienstag
+'Wednesday': Mittwoch
+'Thursday': Donnerstag
+'Friday': Freitag
+'Saturday': Samstag
+'Sunday': Sonntag
