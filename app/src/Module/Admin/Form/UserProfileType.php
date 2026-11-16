@@ -38,6 +38,8 @@ class UserProfileType extends AbstractType
                 'required' => true,
             ])
             ->add('holidayCalendar', EntityType::class, [
+                // Fork: optional. With it required the browser blocked "save" for everyone without a calendar.
+                'required' => false,
                 'class' => HolidayCalendar::class,
                 'choice_label' => fn (HolidayCalendar $c) => $c->countryName,
                 'label' => 'crud.user_profile.field.holiday_calendar',

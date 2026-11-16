@@ -49,6 +49,8 @@ FROM app AS prod
 
 ENV APP_ENV=prod
 
+COPY docker/php/conf/php.prod.ini /usr/local/etc/php/conf.d/zz-prod.ini
+
 WORKDIR /var/www
 
 COPY app/composer.json app/composer.lock app/symfony.lock app/.env app/importmap.php ./

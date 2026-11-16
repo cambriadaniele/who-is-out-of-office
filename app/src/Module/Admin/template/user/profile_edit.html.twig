@@ -80,7 +80,8 @@
                         </div>
                     </div>
 
-                    <div class="field-choice form-group mb-3">
+                    {# Fork: hidden, the kita works on public holidays, so nobody picks a holiday calendar. #}
+                    <div class="field-choice form-group mb-3" hidden>
                         <div class="form-widget">
                             {{ form_row(form.holidayCalendar, {'attr': {'class': 'form-select'}}) }}
                         </div>
