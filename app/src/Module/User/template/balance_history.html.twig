@@ -15,9 +15,14 @@
 
         {% include '@AppAdmin/balance_history/_yearly_summary.html.twig' %}
 
-        {% include '@AppAdmin/balance_history/_statement.html.twig' %}
+        {% set per_year_view = selected_period.isOpen and yearly_balance is defined and yearly_balance %}
+        {% if per_year_view %}
+            <p class="text-secondary small mt-4">{{ 'balance_history.yearly.running_note'|trans(domain: 'admin') }}</p>
+        {% else %}
+            {% include '@AppAdmin/balance_history/_statement.html.twig' %}
 
-        <p class="text-secondary small">{{ 'balance_history.attribution_note'|trans(domain: 'admin') }}</p>
+            <p class="text-secondary small">{{ 'balance_history.attribution_note'|trans(domain: 'admin') }}</p>
+        {% endif %}
 
         <div class="table-responsive">
             <table class="table">

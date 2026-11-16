@@ -43,6 +43,17 @@ class YearlyBalanceDataRepository
     }
 
     /**
+     * Days that are forfeited when the leave year ends on $boundary: what is still free in the
+     * ending year, which is the running balance plus the days already booked for later years.
+     */
+    public function forfeitedAt(string $userId, int $pot, \DateTimeImmutable $boundary): int
+    {
+        $booked = array_sum(array_column($this->activeBookingsFrom($userId, $boundary), 'days'));
+
+        return max(0, $pot + (int) $booked);
+    }
+
+    /**
      * @return array<int, int> year a leave year starts in => allowance in days
      */
     public function allowancesByYear(string $userId): array

@@ -114,7 +114,7 @@ dashboard:
         greeting_afternoon: Good afternoon
         greeting_evening: Good evening
         balance: 'You have %days% vacation days remaining this year'
-        balance_next: 'Next year (%year%) you will have %days% days, carry-over included.'
+        balance_next: 'Next year (%year%) you will have %days% days.'
         request_leave: Request Leave
         view_calendar: View Calendar
     recent_requests:
@@ -321,7 +321,7 @@ crud:
         field:
             year_allowances: 'Vacation days per year (exceptions)'
         help:
-            year_allowances: 'Only fill in if a year differs from the annual allowance. One line per year, for example "2027: 24". Years not listed get the annual allowance. Unused days carry over to the next year.'
+            year_allowances: 'Only fill in if a year differs from the annual allowance. One line per year, for example "2027: 24". Years not listed get the annual allowance. Unused days are forfeited at the end of the year.'
             current_leave_balance: 'The number of available holiday days for the employee. Change it with the Adjust balance action so the change is recorded.'
             absence_balance_reset_day: 'The next annual reset date. It becomes read-only after the employee’s first leave period is created.'
 
@@ -858,9 +858,12 @@ balance_history:
     attribution_note: 'Each entry counts toward the leave year it was recorded in, which isn’t always the year the absence falls in.'
     period.open: '(current)'
     yearly:
-        current: 'Free in this leave year (%year%): <strong>%days%</strong> days'
-        future: '%year%: <strong>%days%</strong> days at the end of the year (allowance %allowance%, already booked %booked%, carry-over included)'
-        note: 'The running account below also deducts leave in later years. That is why its balance can be lower than the days free this year.'
+        tag_current: 'current'
+        free: 'free'
+        carry: 'Carry-over'
+        allowance: 'Allowance'
+        booked: 'Booked'
+        running_note: 'Unused days are forfeited at the end of the year. The running account below deducts leave in later years when it is booked, so "Balance after" can be lower than the free days.'
     pagination:
         label: 'Balance history pages'
         previous: 'Newer entries'

@@ -161,14 +161,18 @@ class RecordBalanceChangeCommandHandler
                 if ($periodStartsOnOrBeforeCreation) {
                     continue;
                 }
+                // Fork: no carry-over, days not taken in the ended year are forfeited.
+                $allowance = $this->yearlyBalanceData->allowanceForYear($userDTO->id, (int) $periodStart->format('Y'), $userDTO->annualLeaveAllowance);
+                $forfeited = $this->yearlyBalanceData->forfeitedAt($userDTO->id, $userDTO->currentLeaveBalance, $periodStart);
                 $this->recordInPeriod(
                     $userDTO,
                     $open,
                     new RecordBalanceChangeCommand(
                         userId: $userDTO->id,
-                        delta: $this->yearlyBalanceData->allowanceForYear($userDTO->id, (int) $periodStart->format('Y'), $userDTO->annualLeaveAllowance),
+                        delta: $allowance - $forfeited,
                         type: BalanceLedgerEntryTypeEnum::Accrual,
                         source: BalanceLedgerSourceEnum::Scheduler,
+                        reason: $forfeited > 0 ? sprintf('Jahresanspruch %d, nicht bezogene Tage verfallen: %d', $allowance, $forfeited) : null,
                     ),
                     $isCurrentPeriod ? $recordedAt : $periodStart,
                 );

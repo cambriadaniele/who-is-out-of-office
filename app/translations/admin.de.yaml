@@ -114,7 +114,7 @@ dashboard:
         greeting_afternoon: Guten Tag
         greeting_evening: Guten Abend
         balance: 'Du hast dieses Jahr noch %days% Ferientage übrig'
-        balance_next: 'Im nächsten Jahr (%year%) sind es voraussichtlich %days% Tage, inklusive Übertrag.'
+        balance_next: 'Im nächsten Jahr (%year%) hast du %days% Tage.'
         request_leave: Abwesenheit beantragen
         view_calendar: Kalender ansehen
     recent_requests:
@@ -321,7 +321,7 @@ crud:
         field:
             year_allowances: 'Ferientage pro Jahr (Ausnahmen)'
         help:
-            year_allowances: 'Nur ausfüllen, wenn ein Jahr vom Jahresanspruch abweicht. Eine Zeile pro Jahr, zum Beispiel «2027: 24». Nicht aufgeführte Jahre bekommen den Jahresanspruch. Nicht bezogene Tage werden ins nächste Jahr übertragen.'
+            year_allowances: 'Nur ausfüllen, wenn ein Jahr vom Jahresanspruch abweicht. Eine Zeile pro Jahr, zum Beispiel «2027: 24». Nicht aufgeführte Jahre bekommen den Jahresanspruch. Nicht bezogene Tage verfallen am Jahresende.'
             current_leave_balance: 'Die Anzahl verfügbarer Ferientage. Ändere sie über die Aktion «Saldo anpassen», damit die Änderung festgehalten wird.'
             absence_balance_reset_day: 'Das Datum der nächsten jährlichen Zurücksetzung. Es kann nicht mehr geändert werden, sobald das erste Ferienjahr der Person angelegt ist.'
 
@@ -853,9 +853,12 @@ balance_history:
     attribution_note: 'Jeder Eintrag zählt zu dem Ferienjahr, in dem er erfasst wurde. Das ist nicht immer das Jahr, in das die Abwesenheit fällt.'
     period.open: '(laufend)'
     yearly:
-        current: 'Frei in diesem Ferienjahr (%year%): <strong>%days%</strong> Tage'
-        future: '%year%: <strong>%days%</strong> Tage am Jahresende (Anspruch %allowance%, bereits gebucht %booked%, inklusive Übertrag)'
-        note: 'Das laufende Konto unten zieht auch Ferien in späteren Jahren schon ab. Deshalb kann der Saldo dort kleiner sein als die freien Tage dieses Jahres.'
+        tag_current: 'laufend'
+        free: 'frei'
+        carry: 'Übertrag'
+        allowance: 'Anspruch'
+        booked: 'Gebucht'
+        running_note: 'Nicht bezogene Tage verfallen am Jahresende. Das laufende Konto unten zieht Ferien in späteren Jahren schon beim Buchen ab; deshalb kann «Saldo danach» kleiner sein als die freien Tage.'
     pagination:
         label: 'Seiten des Saldoverlaufs'
         previous: 'Neuere Einträge'

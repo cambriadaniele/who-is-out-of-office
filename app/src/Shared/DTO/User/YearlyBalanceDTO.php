@@ -9,7 +9,7 @@ namespace App\Shared\DTO\User;
  *
  * The ledger keeps one running balance. This view splits it by the year in which the
  * absence is taken: days left in the current year, then, for every following year,
- * the allowance of that year plus whatever is carried over, minus what is already booked.
+ * the allowance of that year minus what is already booked. Unused days are forfeited at year end, nothing is carried over.
  */
 readonly class YearlyBalanceDTO
 {

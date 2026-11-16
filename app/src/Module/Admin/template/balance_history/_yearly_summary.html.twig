@@ -1,10 +1,25 @@
-{# Fork: vacation days per year. The ledger below is one running account, so it can show less than what is free this year. #}
+{# Fork: one card per leave year. The ledger below is a single running account. #}
 {% if yearly_balance is defined and yearly_balance and (selected_period is null or selected_period.isOpen) %}
-    <div class="alert alert-info">
-        {{ 'balance_history.yearly.current'|trans({'%year%': yearly_balance.currentYear, '%days%': yearly_balance.currentRemaining}, domain: 'admin')|raw }}
+    <div class="year-balance-grid">
+        <div class="year-balance-card year-balance-card-current">
+            <div class="year-balance-year">{{ yearly_balance.currentYear }} <span class="year-balance-tag">{{ 'balance_history.yearly.tag_current'|trans(domain: 'admin') }}</span></div>
+            <div class="year-balance-free">
+                <strong>{{ yearly_balance.currentRemaining }}</strong>
+                <span>{{ 'balance_history.yearly.free'|trans(domain: 'admin') }}</span>
+            </div>
+        </div>
         {% for row in yearly_balance.future %}
-            <br>{{ 'balance_history.yearly.future'|trans({'%year%': row.year, '%allowance%': row.allowance, '%booked%': row.booked, '%days%': row.remaining}, domain: 'admin')|raw }}
+            <div class="year-balance-card">
+                <div class="year-balance-year">{{ row.year }}</div>
+                <dl class="year-balance-rows">
+                    <dt>{{ 'balance_history.yearly.allowance'|trans(domain: 'admin') }}</dt><dd>+{{ row.allowance }}</dd>
+                    <dt>{{ 'balance_history.yearly.booked'|trans(domain: 'admin') }}</dt><dd>&minus;{{ row.booked }}</dd>
+                </dl>
+                <div class="year-balance-free">
+                    <strong>{{ row.remaining }}</strong>
+                    <span>{{ 'balance_history.yearly.free'|trans(domain: 'admin') }}</span>
+                </div>
+            </div>
         {% endfor %}
-        <div class="small mt-2">{{ 'balance_history.yearly.note'|trans(domain: 'admin') }}</div>
     </div>
 {% endif %}

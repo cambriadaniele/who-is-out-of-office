@@ -12,6 +12,7 @@ use App\Shared\DTO\Balance\BalanceLedgerEntryDTO;
 use App\Shared\Enum\BalanceLedgerEntryTypeEnum;
 use App\Shared\Enum\BalanceLedgerSourceEnum;
 use Ramsey\Uuid\Uuid;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 class OpenInitialLeavePeriodCommandHandler
 {
@@ -21,6 +22,9 @@ class OpenInitialLeavePeriodCommandHandler
         private readonly UserBalanceWriterInterface $userBalanceWriter,
         private readonly BalanceLedgerEntryRepositoryInterface $balanceLedgerEntryRepository,
         private readonly OpenLeavePeriodCommandHandler $openLeavePeriodHandler,
+        /** Fork: a leave year that ends on or before this date (Y-m-d) is closed for new accounts: they start it with 0 days. Empty = off. */
+        #[Autowire('%app.new_user_zero_until%')]
+        private readonly string $newUserZeroUntil = '',
     ) {
     }
 
@@ -54,7 +58,10 @@ class OpenInitialLeavePeriodCommandHandler
 
             $openingBalance = $userDTO->currentLeaveBalance;
             if ($isNewUser) {
-                $openingBalance = $userDTO->annualLeaveAllowance;
+                $cutOff = trim($this->newUserZeroUntil);
+                $leaveYearIsClosed = '' !== $cutOff
+                    && $userDTO->absenceBalanceResetDay->format('Y-m-d') <= $cutOff;
+                $openingBalance = $leaveYearIsClosed ? 0 : $userDTO->annualLeaveAllowance;
                 $this->userBalanceWriter->updateCurrentLeaveBalance($userDTO->id, $openingBalance);
             }
 

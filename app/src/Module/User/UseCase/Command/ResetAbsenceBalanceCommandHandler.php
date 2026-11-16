@@ -106,13 +106,17 @@ class ResetAbsenceBalanceCommandHandler
                 return false;
             }
 
-            $carryOver = $userDTO->currentLeaveBalance;
+            // Fork: no carry-over. Days not taken in the ending year are forfeited.
+            $forfeited = $this->yearlyBalanceData->forfeitedAt($userDTO->id, $userDTO->currentLeaveBalance, $userDTO->absenceBalanceResetDay);
+            $carryOver = $forfeited;
+            $allowance = $this->yearlyBalanceData->allowanceForYear($userDTO->id, (int) $userDTO->absenceBalanceResetDay->format('Y'), $userDTO->annualLeaveAllowance);
 
             $this->recordBalanceChangeHandler->handle(new RecordBalanceChangeCommand(
                 userId: $userDTO->id,
-                delta: $this->yearlyBalanceData->allowanceForYear($userDTO->id, (int) $userDTO->absenceBalanceResetDay->format('Y'), $userDTO->annualLeaveAllowance),
+                delta: $allowance - $forfeited,
                 type: BalanceLedgerEntryTypeEnum::Accrual,
                 source: BalanceLedgerSourceEnum::Scheduler,
+                reason: $forfeited > 0 ? sprintf('Jahresanspruch %d, nicht bezogene Tage verfallen: %d', $allowance, $forfeited) : null,
             ));
 
             $updatedUserDTO = $this->userRepository->findOneByIdForUpdate($userDTO->id);
@@ -132,7 +136,7 @@ class ResetAbsenceBalanceCommandHandler
         }
 
         $this->logger->info(sprintf(
-            '[USER][BALANCE-RESET]: Reset balance for ID: %s. Carry-over: %d, granted: %d, next reset: %s.',
+            '[USER][BALANCE-RESET]: Reset balance for ID: %s. Forfeited: %d, granted: %d, next reset: %s.',
             $updatedUserDTO->id,
             (int) $carryOver,
             $updatedUserDTO->annualLeaveAllowance,

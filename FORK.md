@@ -18,9 +18,10 @@ based on upstream commit `e6be329`. Changes on top of upstream:
 - The **iCal feed** text follows the default language.
 - A simpler welcome page.
 - **Vacation days count in the year they are taken** (`YearlyBalanceCalculator`). The ledger stays one running
-  account, but what a person may still book is worked out per leave year: allowance of that year plus carry-over minus
+  account, but what a person may still book is worked out per leave year: allowance of that year minus
   what is booked in it. A booking is checked against its own year and the years after it, so future years can be booked
-  before the year starts. A leave year's allowance can differ from the default (table `user_leave_allowance`, field
+  before the year starts. **No carry-over**: days not taken by the end of the year are forfeited (the 1 January reset
+  adds that year's allowance minus the forfeited days, with the reason written on the ledger entry). A leave year's allowance can differ from the default (table `user_leave_allowance`, field
   "Ferientage pro Jahr (Ausnahmen)" on the Anstellung tab, one `2027: 24` line per year). The dashboard shows the days
   left this year and next year; the history and adjust pages show the per-year numbers above the running account.
   A migration adds the table; run `doctrine:migrations:migrate` when deploying.

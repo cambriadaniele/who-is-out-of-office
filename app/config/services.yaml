@@ -1,4 +1,6 @@
 parameters:
+    env(NEW_USER_ZERO_UNTIL): ''
+    app.new_user_zero_until: '%env(NEW_USER_ZERO_UNTIL)%'
     env(SLACK_ENABLED): 'true'
     app.slack_enabled: '%env(bool:SLACK_ENABLED)%'
     profile_images_base_path: 'uploads/profile_images'
