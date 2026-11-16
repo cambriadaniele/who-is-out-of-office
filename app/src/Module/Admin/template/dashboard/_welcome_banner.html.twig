@@ -6,7 +6,10 @@
             data-greeting-afternoon-value="{{ 'dashboard.welcome.greeting_afternoon'|trans(domain: 'admin') }}"
             data-greeting-evening-value="{{ 'dashboard.welcome.greeting_evening'|trans(domain: 'admin') }}"
         >{{ 'dashboard.welcome.greeting'|trans({'%name%': user.firstName}, domain: 'admin') }}</h2>
-        <p>{{ 'dashboard.welcome.balance'|trans({'%days%': user.currentLeaveBalance}, domain: 'admin') }}</p>
+        <p>{{ 'dashboard.welcome.balance'|trans({'%days%': yearly_balance.currentRemaining}, domain: 'admin') }}</p>
+        {% if yearly_balance.next %}
+        <p>{{ 'dashboard.welcome.balance_next'|trans({'%days%': yearly_balance.next.remaining, '%year%': yearly_balance.next.year}, domain: 'admin') }}</p>
+        {% endif %}
         <div class="welcome-actions">
             <a class="btn btn-cta"
                href="{{ url('app_dashboard_requests_new') }}">

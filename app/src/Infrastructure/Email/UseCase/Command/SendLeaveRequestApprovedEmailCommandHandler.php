@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Infrastructure\Email\UseCase\Command;
 
 use App\Shared\DTO\LeaveRequest\LeaveRequestDTO;
+use App\Shared\Facade\UserFacadeInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
@@ -25,6 +26,7 @@ class SendLeaveRequestApprovedEmailCommandHandler
         private readonly UrlGeneratorInterface $urlGenerator,
         private readonly TranslatorInterface $translator,
         private readonly LoggerInterface $logger,
+        private readonly UserFacadeInterface $userFacade,
     ) {
     }
 
@@ -57,7 +59,7 @@ class SendLeaveRequestApprovedEmailCommandHandler
                 'start_date' => $leaveRequestDTO->startDate,
                 'end_date' => $leaveRequestDTO->endDate,
                 'duration' => $leaveRequestDTO->workDays,
-                'remaining_balance' => $leaveRequestDTO->user->currentLeaveBalance,
+                'remaining_balance' => $this->userFacade->remainingDaysFor($leaveRequestDTO->user->id, $leaveRequestDTO->startDate),
                 'calendar_url' => $calendarUrl,
             ]);
 

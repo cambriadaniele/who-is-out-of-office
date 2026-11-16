@@ -60,6 +60,7 @@ class BalanceHistoryController extends AbstractController
             'periods' => $periods,
             'selected_period' => $selectedPeriod,
             'statement' => $this->userFacade->getBalanceStatement($userId, $selectedPeriod->id),
+            'yearly_balance' => $this->userFacade->getYearlyBalance($userId),
             'entries' => array_slice($entries, 0, $this->pagination->pageSize()),
             'page' => $page,
             'has_previous_page' => $page > 1,

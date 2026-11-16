@@ -17,6 +17,8 @@ readonly class RecordBalanceChangeCommand
         public ?string $reason = null,
         public ?string $actorUserId = null,
         public ?string $leaveRequestId = null,
+        /** Fork: a booking for a later year may take the running balance below zero, the later year's allowance covers it. */
+        public bool $allowNegativeBalance = false,
     ) {
     }
 }

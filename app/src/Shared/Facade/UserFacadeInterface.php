@@ -20,6 +20,21 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 interface UserFacadeInterface
 {
+    /** Vacation days split by the year they are taken in. */
+    public function getYearlyBalance(string $userId): \App\Shared\DTO\User\YearlyBalanceDTO;
+
+    /** Would a booking of $days starting on $start be covered, also in the later years? */
+    public function canBookDays(string $userId, \DateTimeImmutable $start, int $days): bool;
+
+    /** Days still free at the end of the leave year that contains $date. */
+    public function remainingDaysFor(string $userId, \DateTimeImmutable $date): int;
+
+    /** @return array<int, int> year a leave year starts in => allowance */
+    public function getYearAllowanceOverrides(string $userId): array;
+
+    /** @param array<int, int> $byYear */
+    public function setYearAllowanceOverrides(string $userId, array $byYear): void;
+
     public function recordBalanceChange(RecordBalanceChangeCommand $command): void;
 
     public function openInitialLeavePeriod(string $userId, bool $isNewUser = false): void;

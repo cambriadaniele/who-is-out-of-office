@@ -8,6 +8,7 @@ use App\Module\User\Repository\BalanceLedgerEntryRepositoryInterface;
 use App\Module\User\Repository\LeavePeriodRepositoryInterface;
 use App\Module\User\Repository\UserBalanceWriterInterface;
 use App\Module\User\Repository\UserRepositoryInterface;
+use App\Infrastructure\Doctrine\Repository\YearlyBalanceDataRepository;
 use App\Shared\DTO\Balance\BalanceLedgerEntryDTO;
 use App\Shared\DTO\Balance\LeavePeriodDTO;
 use App\Shared\DTO\UserDTO;
@@ -27,6 +28,7 @@ class RecordBalanceChangeCommandHandler
         private readonly OpenInitialLeavePeriodCommandHandler $openInitialLeavePeriodHandler,
         private readonly OpenLeavePeriodCommandHandler $openLeavePeriodHandler,
         private readonly CloseLeavePeriodCommandHandler $closeLeavePeriodHandler,
+        private readonly YearlyBalanceDataRepository $yearlyBalanceData,
     ) {
     }
 
@@ -78,7 +80,7 @@ class RecordBalanceChangeCommandHandler
         $balanceBefore = $userDTO->currentLeaveBalance;
         $balanceAfter = $balanceBefore + $command->delta;
 
-        if (BalanceLedgerEntryTypeEnum::Usage === $command->type && $balanceAfter < 0) {
+        if (BalanceLedgerEntryTypeEnum::Usage === $command->type && $balanceAfter < 0 && !$command->allowNegativeBalance) {
             throw new InsufficientLeaveBalanceException('Insufficient leave balance.');
         }
 
@@ -164,7 +166,7 @@ class RecordBalanceChangeCommandHandler
                     $open,
                     new RecordBalanceChangeCommand(
                         userId: $userDTO->id,
-                        delta: $userDTO->annualLeaveAllowance,
+                        delta: $this->yearlyBalanceData->allowanceForYear($userDTO->id, (int) $periodStart->format('Y'), $userDTO->annualLeaveAllowance),
                         type: BalanceLedgerEntryTypeEnum::Accrual,
                         source: BalanceLedgerSourceEnum::Scheduler,
                     ),

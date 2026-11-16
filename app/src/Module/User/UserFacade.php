@@ -52,6 +52,9 @@ use App\Shared\DTO\PasswordResetTokenDTO;
 use App\Shared\DTO\UserDTO;
 use App\Shared\Enum\PaletteEnum;
 use App\Shared\Enum\ThemeEnum;
+use App\Infrastructure\Doctrine\Repository\YearlyBalanceDataRepository;
+use App\Module\User\UseCase\Query\YearlyBalanceQueryHandler;
+use App\Shared\DTO\User\YearlyBalanceDTO;
 use App\Shared\Facade\UserFacadeInterface;
 use App\Shared\Handler\User\Command\RecordBalanceChangeCommand;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -96,7 +99,34 @@ final class UserFacade implements UserFacadeInterface
         private readonly GetBalanceLedgerForUserQueryHandler $getBalanceLedgerForUserHandler,
         private readonly GetBalanceStatementQueryHandler $getBalanceStatementHandler,
         private readonly ShouldRestoreBalanceForLeaveRequestQueryHandler $shouldRestoreBalanceForLeaveRequestHandler,
+        private readonly YearlyBalanceQueryHandler $yearlyBalanceHandler,
+        private readonly YearlyBalanceDataRepository $yearlyBalanceData,
     ) {
+    }
+
+    public function getYearlyBalance(string $userId): YearlyBalanceDTO
+    {
+        return $this->yearlyBalanceHandler->balance($userId);
+    }
+
+    public function canBookDays(string $userId, \DateTimeImmutable $start, int $days): bool
+    {
+        return $this->yearlyBalanceHandler->canBook($userId, $start, $days);
+    }
+
+    public function remainingDaysFor(string $userId, \DateTimeImmutable $date): int
+    {
+        return $this->yearlyBalanceHandler->remainingFor($userId, $date);
+    }
+
+    public function getYearAllowanceOverrides(string $userId): array
+    {
+        return $this->yearlyBalanceData->allowancesByYear($userId);
+    }
+
+    public function setYearAllowanceOverrides(string $userId, array $byYear): void
+    {
+        $this->yearlyBalanceData->replaceAllowances($userId, $byYear);
     }
 
     public function recordBalanceChange(RecordBalanceChangeCommand $command): void

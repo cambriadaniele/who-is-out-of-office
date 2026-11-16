@@ -63,6 +63,7 @@ class UserBalanceController extends AbstractController
         return $this->render('@AppAdmin/user/adjust_balance.html.twig', [
             'form' => $form->createView(),
             'target_user' => $targetUser,
+            'yearly_balance' => $this->userFacade->getYearlyBalance($targetUser->id),
         ]);
     }
 
@@ -119,6 +120,7 @@ class UserBalanceController extends AbstractController
             'periods' => $periods,
             'selected_period' => $selectedPeriod,
             'statement' => $this->userFacade->getBalanceStatement($targetUser->id, $selectedPeriod->id),
+            'yearly_balance' => $this->userFacade->getYearlyBalance($targetUser->id),
             'entries' => array_slice($entries, 0, $this->pagination->pageSize()),
             'page' => $page,
             'has_previous_page' => $page > 1,

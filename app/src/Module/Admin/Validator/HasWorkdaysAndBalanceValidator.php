@@ -9,6 +9,7 @@ use App\Shared\DTO\LeaveRequest\LeaveRequestTypeDTO;
 use App\Module\Admin\DTO\NewLeaveRequestDTO;
 use App\Shared\Facade\AppSettingsFacadeInterface;
 use App\Shared\Facade\LeaveRequestFacadeInterface;
+use App\Shared\Facade\UserFacadeInterface;
 use App\Shared\Handler\LeaveRequest\Query\CalculateWorkdaysQuery;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\Form;
@@ -24,6 +25,7 @@ class HasWorkdaysAndBalanceValidator extends ConstraintValidator
         private readonly Security $security,
         private readonly LeaveRequestFacadeInterface $leaveRequestFacade,
         private readonly AppSettingsFacadeInterface $appSettingsFacade,
+        private readonly UserFacadeInterface $userFacade,
     ) {
     }
 
@@ -107,7 +109,7 @@ class HasWorkdaysAndBalanceValidator extends ConstraintValidator
             return;
         }
 
-        if ($user->currentLeaveBalance < $workdays) {
+        if (!$this->userFacade->canBookDays($user->id->toString(), $value['start'], $workdays)) {
             $this->context
                 ->buildViolation($constraint->notEnoughBalanceMessage)
                 ->addViolation();

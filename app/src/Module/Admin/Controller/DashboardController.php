@@ -73,6 +73,7 @@ class DashboardController extends AbstractDashboardController
             'recent_requests_total' => $isAdminOrManager ? $this->leaveRequestFacade->countAllRequests($teamUserIds) : 0,
             'whos_out_today' => $this->leaveRequestFacade->findOnLeaveToday($teamUserIds),
             'slack_integration' => $user->slackIntegration,
+            'yearly_balance' => $this->userFacade->getYearlyBalance($userId),
             'leave_balances' => $this->leaveRequestFacade->getLeaveBalancesPerType(
                 $userId,
                 $user->absenceBalanceResetDay->modify('-1 year')

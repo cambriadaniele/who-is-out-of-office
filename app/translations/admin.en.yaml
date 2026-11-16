@@ -114,6 +114,7 @@ dashboard:
         greeting_afternoon: Good afternoon
         greeting_evening: Good evening
         balance: 'You have %days% vacation days remaining this year'
+        balance_next: 'Next year (%year%) you will have %days% days, carry-over included.'
         request_leave: Request Leave
         view_calendar: View Calendar
     recent_requests:
@@ -184,10 +185,10 @@ leave_request:
         cancel: Cancel
         submit: Submit Request
         loading: Loading...
-        info_box: '<strong>%workdays%</strong> workdays will be taken. Remaining balance: <strong>%remaining%</strong>.'
+        info_box: '<strong>%workdays%</strong> workdays will be taken. That leaves <strong>%remaining%</strong> days for %year%.'
         min_notice_box: 'Leave requests must be submitted at least <strong>%days%</strong> days in advance of the requested notice start date.'
         max_consecutive_box: 'Leave requests cannot exceed <strong>%days%</strong> consecutive workdays.'
-        no_balance_box: "Oops! It looks like you don't have enough leave days to cover this request.</br>You currently have <strong>%remaining%</strong> days of leave balance remaining."
+        no_balance_box: "Oops! It looks like you don't have enough leave days to cover this request.</br>You have <strong>%remaining%</strong> days left for %year%."
 
 calendar:
     button:
@@ -273,7 +274,7 @@ calendar:
 user:
     adjust_balance:
         title: 'Adjust leave balance'
-        current: 'Current balance'
+        current: 'Free this year'
         delta: 'Change'
         delta_help: 'Positive adds days, negative removes them.'
         reason: 'Reason'
@@ -317,7 +318,10 @@ crud:
             resend_invitation: Resend Invitation
             adjust_balance: 'Adjust balance'
             balance_history: 'Balance history'
+        field:
+            year_allowances: 'Vacation days per year (exceptions)'
         help:
+            year_allowances: 'Only fill in if a year differs from the annual allowance. One line per year, for example "2027: 24". Years not listed get the annual allowance. Unused days carry over to the next year.'
             current_leave_balance: 'The number of available holiday days for the employee. Change it with the Adjust balance action so the change is recorded.'
             absence_balance_reset_day: 'The next annual reset date. It becomes read-only after the employee’s first leave period is created.'
 
@@ -853,6 +857,10 @@ balance_history:
     period: 'Leave year'
     attribution_note: 'Each entry counts toward the leave year it was recorded in, which isn’t always the year the absence falls in.'
     period.open: '(current)'
+    yearly:
+        current: 'Free in this leave year (%year%): <strong>%days%</strong> days'
+        future: '%year%: <strong>%days%</strong> days at the end of the year (allowance %allowance%, already booked %booked%, carry-over included)'
+        note: 'The running account below also deducts leave in later years. That is why its balance can be lower than the days free this year.'
     pagination:
         label: 'Balance history pages'
         previous: 'Newer entries'

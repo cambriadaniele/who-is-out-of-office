@@ -10,6 +10,7 @@ use App\Shared\DTO\LeaveRequest\LeaveRequestDTO;
 use App\Shared\Enum\BalanceLedgerEntryTypeEnum;
 use App\Shared\Enum\BalanceLedgerSourceEnum;
 use App\Shared\Enum\LeaveRequestStatusEnum;
+use App\Shared\Exception\InsufficientLeaveBalanceException;
 use App\Shared\Facade\UserFacadeInterface;
 use App\Shared\Handler\LeaveRequest\Command\SaveLeaveRequestCommand;
 use App\Shared\Handler\User\Command\RecordBalanceChangeCommand;
@@ -48,6 +49,11 @@ class SaveLeaveRequestCommandHandler
             $saved = true;
 
             if ($command->leaveRequestTypeDTO->isAffectingBalance) {
+                // Fork: days count in the year they are taken, so check the year of the booking (and the years after it).
+                if (!$this->userFacade->canBookDays($userDTO->id, $command->startDate, $workDaysNumber)) {
+                    throw new InsufficientLeaveBalanceException('Insufficient leave balance for the year of this booking.');
+                }
+
                 $this->userFacade->recordBalanceChange(new RecordBalanceChangeCommand(
                     userId: $userDTO->id,
                     delta: -$workDaysNumber,
@@ -55,6 +61,7 @@ class SaveLeaveRequestCommandHandler
                     source: BalanceLedgerSourceEnum::App,
                     actorUserId: $userDTO->id,
                     leaveRequestId: $leaveRequestDTO->id->toString(),
+                    allowNegativeBalance: true,
                 ));
             }
 

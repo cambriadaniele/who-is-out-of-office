@@ -23,6 +23,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
 use Ramsey\Uuid\Uuid;
@@ -154,6 +155,17 @@ class UserCrudController extends AppAbstractCrudController
             yield FormField::addColumn(7);
             yield FormField::addFieldset('Absence Balance');
             yield NumberField::new('annualLeaveAllowance')->hideOnIndex();
+            // Fork: different allowance for single years, e.g. one line "2027: 24". Years without a line use the number above.
+            yield TextareaField::new('yearAllowances', 'crud.user.field.year_allowances')
+                ->setHelp('crud.user.help.year_allowances')
+                ->setFormTypeOptions([
+                    'mapped' => false,
+                    'required' => false,
+                    'data' => $this->formatYearAllowances(),
+                    'attr' => ['rows' => 3, 'placeholder' => "2027: 24\n2028: 22"],
+                ])
+                ->onlyOnForms()
+                ->hideWhenCreating();
             yield NumberField::new('currentLeaveBalance')
                 ->setHelp('crud.user.help.current_leave_balance')
                 ->hideOnIndex()
@@ -260,5 +272,63 @@ class UserCrudController extends AppAbstractCrudController
         }
 
         parent::updateEntity($entityManager, $entityInstance);
+
+        $submitted = $this->submittedYearAllowances();
+        if (null !== $submitted) {
+            $this->userFacade->setYearAllowanceOverrides($entityInstance->id->toString(), $this->parseYearAllowances($submitted));
+        }
+    }
+
+    /** One "year: days" per line, e.g. for the leave year 2027: 24. */
+    private function formatYearAllowances(): string
+    {
+        $user = $this->getContext()?->getEntity()?->getInstance();
+        if (!$user instanceof User) {
+            return '';
+        }
+
+        $lines = [];
+        foreach ($this->userFacade->getYearAllowanceOverrides($user->id->toString()) as $year => $days) {
+            $lines[] = sprintf('%d: %d', $year, $days);
+        }
+
+        return implode("\n", $lines);
+    }
+
+    /** @return array<int, int> */
+    private function parseYearAllowances(string $text): array
+    {
+        $result = [];
+        foreach (preg_split('/\R/', $text) ?: [] as $line) {
+            if (1 === preg_match('/^\s*(20\d{2})\s*[:=]\s*(\d{1,3})\s*$/', $line, $m)) {
+                $result[(int) $m[1]] = (int) $m[2];
+            }
+        }
+        ksort($result);
+
+        return $result;
+    }
+
+    private function submittedYearAllowances(): ?string
+    {
+        $request = $this->getContext()?->getRequest();
+        if (null === $request) {
+            return null;
+        }
+
+        $find = static function (array $data) use (&$find): ?string {
+            foreach ($data as $key => $value) {
+                if ('yearAllowances' === $key && is_string($value)) {
+                    return $value;
+                }
+                if (is_array($value) && null !== ($found = $find($value))) {
+                    return $found;
+                }
+            }
+
+            return null;
+        };
+
+        return $find($request->request->all());
     }
 }

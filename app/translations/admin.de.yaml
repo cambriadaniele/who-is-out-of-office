@@ -114,6 +114,7 @@ dashboard:
         greeting_afternoon: Guten Tag
         greeting_evening: Guten Abend
         balance: 'Du hast dieses Jahr noch %days% Ferientage übrig'
+        balance_next: 'Im nächsten Jahr (%year%) sind es voraussichtlich %days% Tage, inklusive Übertrag.'
         request_leave: Abwesenheit beantragen
         view_calendar: Kalender ansehen
     recent_requests:
@@ -184,10 +185,10 @@ leave_request:
         cancel: Abbrechen
         submit: Antrag einreichen
         loading: Wird geladen...
-        info_box: 'Es werden <strong>%workdays%</strong> Arbeitstage bezogen. Verbleibender Saldo: <strong>%remaining%</strong>.'
+        info_box: 'Es werden <strong>%workdays%</strong> Arbeitstage bezogen. Danach bleiben dir für %year% noch <strong>%remaining%</strong> Tage.'
         min_notice_box: 'Anträge müssen mindestens <strong>%days%</strong> Tage vor dem gewünschten Beginn eingereicht werden.'
         max_consecutive_box: 'Ein Antrag darf höchstens <strong>%days%</strong> aufeinanderfolgende Arbeitstage umfassen.'
-        no_balance_box: "Hoppla! Dein Saldo reicht für diesen Antrag nicht aus.</br>Du hast aktuell noch <strong>%remaining%</strong> Tage übrig."
+        no_balance_box: "Hoppla! Dein Saldo reicht für diesen Antrag nicht aus.</br>Für %year% hast du noch <strong>%remaining%</strong> Tage übrig."
 
 calendar:
     button:
@@ -273,7 +274,7 @@ calendar:
 user:
     adjust_balance:
         title: 'Saldo anpassen'
-        current: 'Aktueller Saldo'
+        current: 'Frei in diesem Jahr'
         delta: 'Änderung'
         delta_help: 'Positive Werte fügen Tage hinzu, negative ziehen Tage ab.'
         reason: 'Grund'
@@ -317,7 +318,10 @@ crud:
             resend_invitation: Einladung erneut senden
             adjust_balance: 'Saldo anpassen'
             balance_history: 'Saldoverlauf'
+        field:
+            year_allowances: 'Ferientage pro Jahr (Ausnahmen)'
         help:
+            year_allowances: 'Nur ausfüllen, wenn ein Jahr vom Jahresanspruch abweicht. Eine Zeile pro Jahr, zum Beispiel «2027: 24». Nicht aufgeführte Jahre bekommen den Jahresanspruch. Nicht bezogene Tage werden ins nächste Jahr übertragen.'
             current_leave_balance: 'Die Anzahl verfügbarer Ferientage. Ändere sie über die Aktion «Saldo anpassen», damit die Änderung festgehalten wird.'
             absence_balance_reset_day: 'Das Datum der nächsten jährlichen Zurücksetzung. Es kann nicht mehr geändert werden, sobald das erste Ferienjahr der Person angelegt ist.'
 
@@ -848,6 +852,10 @@ balance_history:
     period: 'Ferienjahr'
     attribution_note: 'Jeder Eintrag zählt zu dem Ferienjahr, in dem er erfasst wurde. Das ist nicht immer das Jahr, in das die Abwesenheit fällt.'
     period.open: '(laufend)'
+    yearly:
+        current: 'Frei in diesem Ferienjahr (%year%): <strong>%days%</strong> Tage'
+        future: '%year%: <strong>%days%</strong> Tage am Jahresende (Anspruch %allowance%, bereits gebucht %booked%, inklusive Übertrag)'
+        note: 'Das laufende Konto unten zieht auch Ferien in späteren Jahren schon ab. Deshalb kann der Saldo dort kleiner sein als die freien Tage dieses Jahres.'
     pagination:
         label: 'Seiten des Saldoverlaufs'
         previous: 'Neuere Einträge'

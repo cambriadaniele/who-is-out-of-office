@@ -1,0 +1,10 @@
+{# Fork: vacation days per year. The ledger below is one running account, so it can show less than what is free this year. #}
+{% if yearly_balance is defined and yearly_balance and (selected_period is null or selected_period.isOpen) %}
+    <div class="alert alert-info">
+        {{ 'balance_history.yearly.current'|trans({'%year%': yearly_balance.currentYear, '%days%': yearly_balance.currentRemaining}, domain: 'admin')|raw }}
+        {% for row in yearly_balance.future %}
+            <br>{{ 'balance_history.yearly.future'|trans({'%year%': row.year, '%allowance%': row.allowance, '%booked%': row.booked, '%days%': row.remaining}, domain: 'admin')|raw }}
+        {% endfor %}
+        <div class="small mt-2">{{ 'balance_history.yearly.note'|trans(domain: 'admin') }}</div>
+    </div>
+{% endif %}

@@ -13,6 +13,8 @@
     {% else %}
         {% include '@AppAdmin/balance_history/_period_selector.html.twig' with {route: 'app_balance_history', route_params: {}} %}
 
+        {% include '@AppAdmin/balance_history/_yearly_summary.html.twig' %}
+
         {% include '@AppAdmin/balance_history/_statement.html.twig' %}
 
         <p class="text-secondary small">{{ 'balance_history.attribution_note'|trans(domain: 'admin') }}</p>

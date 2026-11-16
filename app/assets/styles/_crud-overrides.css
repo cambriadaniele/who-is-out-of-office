@@ -344,3 +344,111 @@ html.dark body.ea .datagrid .table > tbody > tr > td .icon svg {
         padding: 12px 0;
     }
 }
+
+/* ------------------------------------------------------------------
+   Phones: each list row becomes its own card (fork change).
+   EasyAdmin stacks every cell as "label | value" at < 768px, which makes the
+   rows run into each other. Here a row is one boxed card:
+     title (the first column) + the row menu, then a small two-column grid
+     of label-above-value pairs. Desktop (>= 768px) is not touched.
+   The !important flags are needed because EasyAdmin and the rules above set
+   padding, border and alignment on the cells with the same or higher weight.
+   ------------------------------------------------------------------ */
+@media (max-width: 767px) {
+    body.ea table.datagrid {
+        border: 0;
+        background: transparent;
+        box-shadow: none;
+    }
+
+    body.ea table.datagrid > tbody {
+        display: block;
+    }
+
+    body.ea table.datagrid > tbody > tr {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px 12px;
+        margin: 0 0 14px;
+        padding: 14px 14px 16px;
+        position: relative;
+        background: var(--app-surface);
+        border: 1px solid var(--border-light);
+        border-left: 4px solid var(--primary);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-sm);
+    }
+
+    html body.ea table.datagrid > tbody > tr > td:not(.x1):not(.x2) {
+        display: block !important;
+        min-width: 0;
+        width: auto !important;
+        padding: 0 !important;
+        padding-left: 0 !important;
+        border: 0 !important;
+        background: transparent !important;
+        font-size: 14px;
+        color: var(--text-primary);
+        text-align: left !important;
+    }
+
+    /* label above the value */
+    body.ea table.datagrid > tbody > tr > td::before {
+        position: static !important;
+        display: block !important;
+        width: auto !important;
+        padding: 0 !important;
+        margin: 0 0 2px;
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        white-space: normal;
+        color: var(--text-muted);
+    }
+
+    /* the first column is the card title and needs no label */
+    html body.ea table.datagrid > tbody > tr > td:first-child:not(.x1):not(.x2) {
+        grid-column: 1 / -1;
+        padding-right: 48px !important; /* room for the row menu */
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    body.ea table.datagrid > tbody > tr > td:first-child::before {
+        display: none !important;
+    }
+
+    /* the row menu sits in the top right corner of the card */
+    body.ea table.datagrid > tbody > tr > td.actions {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        grid-column: auto;
+    }
+
+    body.ea table.datagrid > tbody > tr > td.actions::before {
+        display: none !important;
+    }
+
+    body.ea table.datagrid > tbody > tr > td.actions .dropdown-toggle {
+        border: 0;
+        background: transparent;
+        box-shadow: none;
+    }
+
+    /* start and end date stand out: this is what people look for first */
+    html body.ea table.datagrid > tbody > tr > td[data-column="startDate"]:not(.x1):not(.x2),
+    html body.ea table.datagrid > tbody > tr > td[data-column="endDate"]:not(.x1):not(.x2) {
+        font-weight: 600;
+        font-size: 15px;
+        padding: 8px 10px !important;
+        border-radius: var(--radius-md);
+        background: var(--primary-subtle) !important;
+    }
+
+    body.ea table.datagrid > tbody > tr > td[data-column="startDate"]::before,
+    body.ea table.datagrid > tbody > tr > td[data-column="endDate"]::before {
+        color: var(--primary-dark);
+    }
+}

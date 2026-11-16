@@ -7,6 +7,7 @@ namespace App\Module\User\UseCase\Command;
 use App\Module\User\Repository\UserRepositoryInterface;
 use App\Module\User\Repository\LeavePeriodRepositoryInterface;
 use App\Module\User\Repository\UserBalanceWriterInterface;
+use App\Infrastructure\Doctrine\Repository\YearlyBalanceDataRepository;
 use App\Shared\DTO\UserDTO;
 use App\Shared\Enum\BalanceLedgerEntryTypeEnum;
 use App\Shared\Enum\BalanceLedgerSourceEnum;
@@ -22,6 +23,7 @@ class ResetAbsenceBalanceCommandHandler
         private readonly CloseLeavePeriodCommandHandler $closeLeavePeriodHandler,
         private readonly OpenLeavePeriodCommandHandler $openLeavePeriodHandler,
         private readonly RecordBalanceChangeCommandHandler $recordBalanceChangeHandler,
+        private readonly YearlyBalanceDataRepository $yearlyBalanceData,
         private readonly LoggerInterface $logger,
     ) {
     }
@@ -108,7 +110,7 @@ class ResetAbsenceBalanceCommandHandler
 
             $this->recordBalanceChangeHandler->handle(new RecordBalanceChangeCommand(
                 userId: $userDTO->id,
-                delta: $userDTO->annualLeaveAllowance,
+                delta: $this->yearlyBalanceData->allowanceForYear($userDTO->id, (int) $userDTO->absenceBalanceResetDay->format('Y'), $userDTO->annualLeaveAllowance),
                 type: BalanceLedgerEntryTypeEnum::Accrual,
                 source: BalanceLedgerSourceEnum::Scheduler,
             ));

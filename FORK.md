@@ -17,6 +17,14 @@ based on upstream commit `e6be329`. Changes on top of upstream:
 - **Roles** are chosen with named checkboxes when adding or editing a team member, not typed as `ROLE_…`.
 - The **iCal feed** text follows the default language.
 - A simpler welcome page.
+- **Vacation days count in the year they are taken** (`YearlyBalanceCalculator`). The ledger stays one running
+  account, but what a person may still book is worked out per leave year: allowance of that year plus carry-over minus
+  what is booked in it. A booking is checked against its own year and the years after it, so future years can be booked
+  before the year starts. A leave year's allowance can differ from the default (table `user_leave_allowance`, field
+  "Ferientage pro Jahr (Ausnahmen)" on the Anstellung tab, one `2027: 24` line per year). The dashboard shows the days
+  left this year and next year; the history and adjust pages show the per-year numbers above the running account.
+  A migration adds the table; run `doctrine:migrations:migrate` when deploying.
+- **Phones**: list rows (for example the leave requests) are shown as cards instead of stacked label/value rows.
 
 Not translated: Slack messages.
 

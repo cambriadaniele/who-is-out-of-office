@@ -13,6 +13,7 @@ use App\Shared\Enum\LeaveRequestStatusEnum;
 use App\Shared\Facade\AppSettingsFacadeInterface;
 use App\Shared\Facade\HolidayFacadeInterface;
 use App\Shared\Facade\LeaveRequestFacadeInterface;
+use App\Shared\Facade\UserFacadeInterface;
 use App\Shared\Handler\LeaveRequest\Query\CalculateWorkdaysQuery;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -126,6 +127,7 @@ class LeaveRequestForm extends AbstractController
         User $user,
         LeaveRequestFacadeInterface $leaveRequestFacade,
         AppSettingsFacadeInterface $appSettingsFacade,
+        UserFacadeInterface $userFacade,
     ): void {
         $this->isSubmitDisabled = true;
         $this->infoBox = '';
@@ -187,15 +189,18 @@ class LeaveRequestForm extends AbstractController
             return;
         }
 
-        $remainingBalance = $user->currentLeaveBalance - $workdaysNumber;
+        // Fork: days are counted in the year they are taken, not against today's running balance.
+        $userId = $user->id->toString();
+        $remainingInYear = $userFacade->remainingDaysFor($userId, $startDate);
+        $remainingBalance = $remainingInYear - $workdaysNumber;
 
-        if ($remainingBalance < 0) {
-            $this->infoBox = $this->generateNoBalanceBox($user->currentLeaveBalance);
+        if (!$userFacade->canBookDays($userId, $startDate, $workdaysNumber)) {
+            $this->infoBox = $this->generateNoBalanceBox($remainingInYear, (int) $startDate->format('Y'));
 
             return;
         }
 
-        $this->infoBox = $this->generateInfoBox($workdaysNumber, $remainingBalance);
+        $this->infoBox = $this->generateInfoBox($workdaysNumber, $remainingBalance, (int) $startDate->format('Y'));
         $this->isSubmitDisabled = false;
     }
 
@@ -207,11 +212,11 @@ class LeaveRequestForm extends AbstractController
         return explode(' to ', $rageString.' to ');
     }
 
-    private function generateInfoBox(int $workdaysNumber, int $remainingBalance): string
+    private function generateInfoBox(int $workdaysNumber, int $remainingBalance, int $year): string
     {
         $message = $this->translator->trans(
             'leave_request.new.info_box',
-            ['%workdays%' => $workdaysNumber, '%remaining%' => $remainingBalance],
+            ['%workdays%' => $workdaysNumber, '%remaining%' => $remainingBalance, '%year%' => $year],
             'admin',
         );
 
@@ -240,11 +245,11 @@ class LeaveRequestForm extends AbstractController
         return sprintf('<div class="alert alert-warning mt-3" id="maxConsecutiveBox">%s</div>', $message);
     }
 
-    private function generateNoBalanceBox(int $remainingBalance): string
+    private function generateNoBalanceBox(int $remainingBalance, int $year): string
     {
         $message = $this->translator->trans(
             'leave_request.new.no_balance_box',
-            ['%remaining%' => $remainingBalance],
+            ['%remaining%' => max(0, $remainingBalance), '%year%' => $year],
             'admin',
         );
 
