@@ -1,10 +1,11 @@
 parameters:
     env(APP_LOCALE): en
+    env(APP_LOCALE_FROM_BROWSER): 'true'
 
 framework:
     default_locale: '%env(APP_LOCALE)%'
     enabled_locales: ['en', 'de']
-    set_locale_from_accept_language: true
+    set_locale_from_accept_language: '%env(bool:APP_LOCALE_FROM_BROWSER)%'
     set_content_language_from_locale: true
     translator:
         default_path: '%kernel.project_dir%/translations'

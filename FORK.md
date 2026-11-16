@@ -6,6 +6,7 @@ based on upstream commit `e6be329`. Changes on top of upstream:
 - **German translation** (`app/translations/*.de.yaml`, Swiss spelling, informal "du").
 - **Language selection**: `APP_LOCALE` sets the default language (`en` if unset; emails and scheduled jobs use it).
   In the browser the language follows `Accept-Language` among the enabled ones (`en`, `de`).
+  `APP_LOCALE_FROM_BROWSER=false` turns that off, so everyone gets the default language.
 - **Dates follow the language** (`App\Shared\Service\DateLocalizer`, Twig filter `ldate`), as do the team calendar
   and the date picker.
 - A few labels that were plain English text in the code now go through the translator.
