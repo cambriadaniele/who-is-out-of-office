@@ -99,6 +99,8 @@ welcome:
     footer_version: "Who's OOO | Quelloffene Abwesenheitsplanung"
 
 login:
+    email: E-Mail-Adresse
+    invitation_used: Dieser Einladungslink wurde bereits verwendet oder ist nicht mehr gültig. Wenn du dein Passwort schon gesetzt hast, melde dich mit deiner E-Mail-Adresse an.
     forgot_password: Passwort vergessen?
 
 password_reset:

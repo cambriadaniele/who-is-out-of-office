@@ -99,6 +99,8 @@ welcome:
     footer_version: "Who's OOO | Open source leave management"
 
 login:
+    email: Email address
+    invitation_used: This invitation link has already been used or is no longer valid. If you have set your password, sign in with your email address.
     forgot_password: Forgot your password?
 
 password_reset:

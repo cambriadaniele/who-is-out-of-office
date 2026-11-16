@@ -1,4 +1,4 @@
-{% set _username_label = username_label is defined ? username_label|trans : 'login_page.username'|trans({}, 'EasyAdminBundle') %}
+{% set _username_label = 'login.email'|trans %}
 {% set _password_label = password_label is defined ? password_label|trans : 'login_page.password'|trans({}, 'EasyAdminBundle') %}
 {% set _sign_in_label = sign_in_label is defined ? sign_in_label|trans : 'login_page.sign_in'|trans({}, 'EasyAdminBundle') %}
 <!DOCTYPE html>
@@ -178,6 +178,11 @@
         <div class="login-card">
             <h2>{{ _sign_in_label }}</h2>
 
+            {% if app.request.query.get('invitation') == 'used' %}
+                <div class="alert-error">
+                    {{ 'login.invitation_used'|trans }}
+                </div>
+            {% endif %}
             {% if error|default(false) %}
                 <div class="alert-error">
                     {{ error.messageKey|trans(error.messageData, 'security') }}

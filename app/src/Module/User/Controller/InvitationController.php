@@ -12,7 +12,6 @@ use App\Shared\Facade\UserFacadeInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/invitation/{token}', name: 'app_user_invitation', methods: ['GET', 'POST'])]
@@ -33,7 +32,7 @@ class InvitationController extends AbstractController
         $invitationDTO = $this->invitationRepository->findOneByToken($token);
 
         if (!$invitationDTO instanceof InvitationDTO) {
-            throw new NotFoundHttpException();
+            return $this->redirectToRoute('app_login', ['invitation' => 'used']);
         }
 
         $form = $this->createForm(UserInvitationType::class, new UserInvitationRequestDTO('', '', ''));
