@@ -1,6 +1,6 @@
 {% extends '@AppAdmin/layout.html.twig' %}
 
-{% block content_title %}{{ target_user.getFullName() }} &middot; {{ 'balance_history.title'|trans(domain: 'admin') }}{% endblock %}
+{% block page_title %}{{ target_user.getFullName() }} &middot; {{ 'balance_history.title'|trans(domain: 'admin') }}{% endblock %}
 
 {% block main %}
     <div class="content-header">

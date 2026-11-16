@@ -31,6 +31,7 @@ class AdminContextForCustomRoutesSubscriber implements EventSubscriberInterface
         'app_balance_history',
         'app_user_adjust_balance',
         'app_user_balance_history',
+        'app_user_vacation_days',
     ];
 
     public function __construct(

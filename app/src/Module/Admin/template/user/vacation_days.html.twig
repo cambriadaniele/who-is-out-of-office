@@ -1,0 +1,89 @@
+{% extends '@AppAdmin/layout.html.twig' %}
+
+{% block page_title %}{{ 'user.vacation_days.title'|trans(domain: 'admin') }}{% endblock %}
+
+{% block content_header %}
+    <div class="content-header-title">
+        <h1 class="title">{{ target_user.getFullName() }} &middot; {{ 'user.vacation_days.title'|trans(domain: 'admin') }}</h1>
+        <p class="text-secondary">{{ 'user.vacation_days.subtitle'|trans(domain: 'admin') }}</p>
+    </div>
+{% endblock %}
+
+{% block main %}
+    {% set token = csrf_token('vacation-days' ~ target_user.id) %}
+    <div class="year-balance-grid vacation-days-grid">
+        {% for card in cards %}
+            <section class="year-balance-card{{ card.isCurrent ? ' year-balance-card-current' }}">
+                <div class="year-balance-year">
+                    {{ card.year }}
+                    <span class="year-balance-tag">{{ (card.isCurrent ? 'user.vacation_days.tag_current' : 'user.vacation_days.tag_future')|trans(domain: 'admin') }}</span>
+                </div>
+
+                <dl class="year-balance-rows">
+                    <dt>{{ 'user.vacation_days.allowance'|trans(domain: 'admin') }}{% if card.isException %} <span class="vacation-days-badge">{{ 'user.vacation_days.exception'|trans(domain: 'admin') }}</span>{% endif %}</dt>
+                    <dd>{{ card.allowance }}</dd>
+                    <dt>{{ 'user.vacation_days.corrections'|trans(domain: 'admin') }}</dt>
+                    <dd>{{ card.corrections > 0 ? '+' }}{{ card.corrections }}</dd>
+                    <dt>{{ 'user.vacation_days.booked'|trans(domain: 'admin') }}</dt>
+                    <dd>&minus;{{ card.booked }}</dd>
+                </dl>
+
+                <div class="year-balance-free">
+                    <strong>{{ card.free }}</strong>
+                    <span>{{ 'user.vacation_days.free'|trans(domain: 'admin') }}</span>
+                </div>
+
+                <details class="vacation-days-action">
+                    <summary class="btn btn-outline btn-sm">{{ 'user.vacation_days.correct'|trans(domain: 'admin') }}</summary>
+                    <form method="post" action="{{ path('app_user_vacation_days_correct', {id: target_user.id, year: card.year}) }}" class="vacation-days-form">
+                        <input type="hidden" name="_token" value="{{ token }}">
+                        <div class="vacation-days-toggle" role="radiogroup">
+                            <label><input type="radio" name="direction" value="add" checked> {{ 'user.vacation_days.add'|trans(domain: 'admin') }}</label>
+                            <label><input type="radio" name="direction" value="remove"> {{ 'user.vacation_days.remove'|trans(domain: 'admin') }}</label>
+                        </div>
+                        <label class="form-label">{{ 'user.vacation_days.days'|trans(domain: 'admin') }}
+                            <input class="form-control" type="number" name="days" min="1" max="365" required inputmode="numeric">
+                        </label>
+                        <label class="form-label">{{ 'user.vacation_days.reason'|trans(domain: 'admin') }}
+                            <input class="form-control" type="text" name="reason" maxlength="255" required placeholder="{{ 'user.vacation_days.reason_placeholder'|trans(domain: 'admin') }}">
+                        </label>
+                        <button type="submit" class="btn btn-primary btn-sm">{{ 'user.vacation_days.save'|trans(domain: 'admin') }}</button>
+                    </form>
+                </details>
+
+                {% if not card.isCurrent %}
+                    <details class="vacation-days-action">
+                        <summary class="btn btn-outline btn-sm">{{ 'user.vacation_days.change_allowance'|trans(domain: 'admin') }}</summary>
+                        <form method="post" action="{{ path('app_user_vacation_days_allowance', {id: target_user.id, year: card.year}) }}" class="vacation-days-form">
+                            <input type="hidden" name="_token" value="{{ token }}">
+                            <label class="form-label">{{ 'user.vacation_days.allowance_for'|trans({'%year%': card.year}, domain: 'admin') }}
+                                <input class="form-control" type="number" name="days" min="0" max="365" value="{{ card.baseAllowance }}" inputmode="numeric">
+                            </label>
+                            <div class="vacation-days-buttons">
+                                <button type="submit" class="btn btn-primary btn-sm">{{ 'user.vacation_days.save'|trans(domain: 'admin') }}</button>
+                                {% if card.isException %}
+                                    <button type="submit" name="action" value="reset" class="btn btn-outline btn-sm">{{ 'user.vacation_days.reset_allowance'|trans({'%days%': target_user.annualLeaveAllowance}, domain: 'admin') }}</button>
+                                {% endif %}
+                            </div>
+                        </form>
+                    </details>
+                {% endif %}
+
+                {% if card.entries is not empty %}
+                    <ul class="vacation-days-entries">
+                        {% for entry in card.entries %}
+                            <li>
+                                <span class="vacation-days-delta {{ entry.delta > 0 ? 'is-plus' : 'is-minus' }}">{{ entry.delta > 0 ? '+' }}{{ entry.delta }}</span>
+                                <span class="vacation-days-reason">{{ entry.reason }}</span>
+                                <span class="vacation-days-meta">{{ entry.created_at|date('d.m.Y') }}{% if entry.actor %} &middot; {{ entry.actor }}{% endif %}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </section>
+        {% endfor %}
+    </div>
+
+    <p class="text-secondary small mt-3">{{ 'user.vacation_days.footnote'|trans(domain: 'admin') }}</p>
+    <p class="small"><a href="{{ path('app_user_balance_history', {id: target_user.id}) }}">{{ 'crud.user.action.balance_history'|trans(domain: 'admin') }} &rarr;</a></p>
+{% endblock %}

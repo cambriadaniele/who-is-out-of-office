@@ -41,6 +41,9 @@ class UserBalanceController extends AbstractController
             throw new NotFoundHttpException(sprintf('User "%s" not found.', $id));
         }
 
+        // Fork: managed per year on the new page now.
+        return $this->redirectToRoute('app_user_vacation_days', ['id' => $targetUser->id]);
+
         $adjustBalanceDTO = new AdjustBalanceDTO();
         $form = $this->createForm(AdjustBalanceFormType::class, $adjustBalanceDTO);
         $form->handleRequest($request);

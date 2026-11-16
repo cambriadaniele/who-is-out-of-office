@@ -272,6 +272,31 @@ calendar:
         scope_regional: Regional
 
 user:
+    vacation_days:
+        title: 'Ferientage verwalten'
+        subtitle: 'Anspruch und Korrekturen pro Jahr. Nicht bezogene Tage verfallen am Jahresende.'
+        tag_current: 'laufend'
+        tag_future: 'kommend'
+        allowance: 'Jahresanspruch'
+        exception: 'angepasst'
+        corrections: 'Korrekturen'
+        booked: 'Gebucht'
+        free: 'frei'
+        correct: 'Tage anpassen'
+        add: 'Hinzufügen'
+        remove: 'Abziehen'
+        days: 'Anzahl Tage'
+        reason: 'Grund'
+        reason_placeholder: 'z. B. Dienstjubiläum, Korrektur, Überstunden'
+        save: 'Speichern'
+        change_allowance: 'Anspruch ändern'
+        allowance_for: 'Jahresanspruch %year% (Tage)'
+        reset_allowance: 'Zurück auf Standard (%days%)'
+        footnote: 'Änderungen für ein kommendes Jahr gelten ab dem 1. Januar dieses Jahres. Alle Änderungen erscheinen mit Grund im Saldoverlauf bzw. in der Liste auf der Karte.'
+        flash:
+            corrected: 'Ferientage angepasst.'
+            allowance: 'Jahresanspruch gespeichert.'
+            invalid: 'Bitte eine Anzahl Tage (1 bis 365) und einen Grund angeben.'
     adjust_balance:
         title: 'Saldo anpassen'
         current: 'Frei in diesem Jahr'
@@ -317,6 +342,7 @@ crud:
             reset_password: Passwort zurücksetzen
             resend_invitation: Einladung erneut senden
             adjust_balance: 'Saldo anpassen'
+            vacation_days: 'Ferientage verwalten'
             balance_history: 'Saldoverlauf'
         field:
             year_allowances: 'Ferientage pro Jahr (Ausnahmen)'

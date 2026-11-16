@@ -119,6 +119,21 @@ final class UserFacade implements UserFacadeInterface
         return $this->yearlyBalanceHandler->remainingFor($userId, $date);
     }
 
+    public function getVacationOverview(string $userId): array
+    {
+        return $this->yearlyBalanceHandler->overview($userId);
+    }
+
+    public function addFutureYearCorrection(string $userId, int $year, int $delta, string $reason, ?string $actorUserId): void
+    {
+        $this->yearlyBalanceData->addAdjustment($userId, $year, $delta, $reason, $actorUserId);
+    }
+
+    public function setYearAllowance(string $userId, int $year, ?int $days): void
+    {
+        $this->yearlyBalanceData->setAllowance($userId, $year, $days);
+    }
+
     public function getYearAllowanceOverrides(string $userId): array
     {
         return $this->yearlyBalanceData->allowancesByYear($userId);

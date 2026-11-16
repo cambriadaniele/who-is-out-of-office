@@ -100,8 +100,8 @@ class UserCrudController extends AppAbstractCrudController
             ->addCssClass('btn btn-outline')
             ->displayIf(fn (User $entity) => $this->isAdmin() && !$entity->isActive && $this->userFacade->hasPendingInvitation($entity->id->toString()));
 
-        $adjustBalanceAction = Action::new('adjustBalance', 'crud.user.action.adjust_balance')
-            ->linkToUrl(fn (User $entity) => $this->urlGenerator->generate('app_user_adjust_balance', ['id' => $entity->id]))
+        $adjustBalanceAction = Action::new('adjustBalance', 'crud.user.action.vacation_days')
+            ->linkToUrl(fn (User $entity) => $this->urlGenerator->generate('app_user_vacation_days', ['id' => $entity->id]))
             ->setIcon('icon-sliders')
             ->addCssClass('btn btn-outline')
             ->displayIf(fn (User $entity) => $this->isAdmin());
@@ -121,7 +121,9 @@ class UserCrudController extends AppAbstractCrudController
             ->add(Crud::PAGE_EDIT, $resetPasswordAction)
             ->add(Crud::PAGE_DETAIL, $resendInvitationAction)
             ->add(Crud::PAGE_EDIT, $resendInvitationAction)
+            ->add(Crud::PAGE_INDEX, $adjustBalanceAction)
             ->add(Crud::PAGE_DETAIL, $adjustBalanceAction)
+            ->add(Crud::PAGE_EDIT, $adjustBalanceAction)
             ->add(Crud::PAGE_DETAIL, $balanceHistoryAction)
             ->add(Crud::PAGE_EDIT, $balanceHistoryAction);
     }
@@ -155,17 +157,6 @@ class UserCrudController extends AppAbstractCrudController
             yield FormField::addColumn(7);
             yield FormField::addFieldset('Absence Balance');
             yield NumberField::new('annualLeaveAllowance')->hideOnIndex();
-            // Fork: different allowance for single years, e.g. one line "2027: 24". Years without a line use the number above.
-            yield TextareaField::new('yearAllowances', 'crud.user.field.year_allowances')
-                ->setHelp('crud.user.help.year_allowances')
-                ->setFormTypeOptions([
-                    'mapped' => false,
-                    'required' => false,
-                    'data' => $this->formatYearAllowances(),
-                    'attr' => ['rows' => 3, 'placeholder' => "2027: 24\n2028: 22"],
-                ])
-                ->onlyOnForms()
-                ->hideWhenCreating();
             yield NumberField::new('currentLeaveBalance')
                 ->setHelp('crud.user.help.current_leave_balance')
                 ->hideOnIndex()

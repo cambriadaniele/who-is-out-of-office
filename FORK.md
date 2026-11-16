@@ -25,6 +25,11 @@ based on upstream commit `e6be329`. Changes on top of upstream:
   "Ferientage pro Jahr (Ausnahmen)" on the Anstellung tab, one `2027: 24` line per year). The dashboard shows the days
   left this year and next year; the history and adjust pages show the per-year numbers above the running account.
   A migration adds the table; run `doctrine:migrations:migrate` when deploying.
+- **"Ferientage verwalten" page** per person (admins; from the team member list, detail and edit pages): one card per
+  leave year (current + next two) with allowance, corrections, booked and free days. "Tage anpassen" adds or removes
+  days with a required reason: in the current year it is a ledger entry, for a coming year it is stored in
+  `user_leave_year_adjustment` and added by the 1 January reset. "Anspruch ändern" sets a coming year's allowance.
+  Replaces the old "Saldo anpassen" form (its URL redirects here) and the "2027: 24" text field.
 - **Phones**: list rows (for example the leave requests) are shown as cards instead of stacked label/value rows.
 
 Not translated: Slack messages.

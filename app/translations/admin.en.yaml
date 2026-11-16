@@ -272,6 +272,31 @@ calendar:
         scope_regional: Regional
 
 user:
+    vacation_days:
+        title: 'Manage vacation days'
+        subtitle: 'Allowance and corrections per year. Unused days are forfeited at the end of the year.'
+        tag_current: 'current'
+        tag_future: 'upcoming'
+        allowance: 'Annual allowance'
+        exception: 'changed'
+        corrections: 'Corrections'
+        booked: 'Booked'
+        free: 'free'
+        correct: 'Adjust days'
+        add: 'Add'
+        remove: 'Remove'
+        days: 'Number of days'
+        reason: 'Reason'
+        reason_placeholder: 'e.g. work anniversary, correction, overtime'
+        save: 'Save'
+        change_allowance: 'Change annual allowance'
+        allowance_for: 'Annual allowance %year% (days)'
+        reset_allowance: 'Back to default (%days%)'
+        footnote: 'Changes for an upcoming year take effect on 1 January of that year. Every change is listed with its reason on the card and in the balance history.'
+        flash:
+            corrected: 'Vacation days updated.'
+            allowance: 'Annual allowance saved.'
+            invalid: 'Please enter a number of days (1 to 365) and a reason.'
     adjust_balance:
         title: 'Adjust leave balance'
         current: 'Free this year'
@@ -317,6 +342,7 @@ crud:
             reset_password: Reset Password
             resend_invitation: Resend Invitation
             adjust_balance: 'Adjust balance'
+            vacation_days: 'Manage vacation days'
             balance_history: 'Balance history'
         field:
             year_allowances: 'Vacation days per year (exceptions)'

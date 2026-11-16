@@ -29,6 +29,15 @@ interface UserFacadeInterface
     /** Days still free at the end of the leave year that contains $date. */
     public function remainingDaysFor(string $userId, \DateTimeImmutable $date): int;
 
+    /** Cards for the "Ferientage verwalten" page: current leave year and the next two. */
+    public function getVacationOverview(string $userId): array;
+
+    /** Correction for a leave year that has not started yet; applied by the reset when it starts. */
+    public function addFutureYearCorrection(string $userId, int $year, int $delta, string $reason, ?string $actorUserId): void;
+
+    /** Base allowance for one leave year; null = back to the annual allowance. */
+    public function setYearAllowance(string $userId, int $year, ?int $days): void;
+
     /** @return array<int, int> year a leave year starts in => allowance */
     public function getYearAllowanceOverrides(string $userId): array;
 
