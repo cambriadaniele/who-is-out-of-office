@@ -1,0 +1,4 @@
+{%- for role in entity.instance.getRoles() -%}
+    {{- ('role.' ~ role|replace({'ROLE_': ''})|lower)|trans(domain: 'admin') -}}
+    {%- if not loop.last %}, {% endif -%}
+{%- endfor -%}
