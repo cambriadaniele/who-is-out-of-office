@@ -2,7 +2,7 @@
 
 {% block subject %}{{ 'email.leave_request.pending_approval.subject'|trans({'%name%': employee_name}) }}{% endblock %}
 
-{% block preheader %}{{ 'email.leave_request.pending_approval.preheader'|trans({'%name%': employee_name, '%date%': start_date|date('F j')}) }}{% endblock %}
+{% block preheader %}{{ 'email.leave_request.pending_approval.preheader'|trans({'%name%': employee_name, '%date%': start_date|ldate('long')}) }}{% endblock %}
 
 {% block content %}
 
@@ -89,7 +89,7 @@
                                 </tr>
                                 <tr>
                                     <td style="font-family: 'Sora', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 15px; color: #1A2E2E; font-weight: bold;">
-                                        {{ start_date|date('M j, Y') }} — {{ end_date|date('M j, Y') }}
+                                        {{ start_date|ldate }} — {{ end_date|ldate }}
                                     </td>
                                 </tr>
                             </table>

@@ -61,7 +61,7 @@
             </button>
         </div>
 
-        <nav class="ooo-sidebar-nav" aria-label="Main navigation">
+        <nav class="ooo-sidebar-nav" aria-label="{{ 'bottom_nav.label'|trans(domain: 'admin') }}">
             <a class="ooo-sidebar-item {{ _current_route == 'app_dashboard' ? 'active' }}"
                href="{{ path('app_dashboard') }}"
                title="{{ 'menu.items.dashboard'|trans(domain: 'admin') }}">
@@ -342,36 +342,36 @@
                                 data-action="click->avatar-dropdown#setPalette"
                                 role="radio"
                                 aria-checked="false"
-                                aria-label="Warm Teal"
+                                aria-label="{{ 'settings.appearance.palette.teal'|trans(domain: 'admin') }}"
                                 style="--swatch-color: #3D9B8F"
-                                title="Warm Teal">
+                                title="{{ 'settings.appearance.palette.teal'|trans(domain: 'admin') }}">
                         </button>
                         <button class="avatar-dropdown-palette-swatch"
                                 data-palette="sage"
                                 data-action="click->avatar-dropdown#setPalette"
                                 role="radio"
                                 aria-checked="false"
-                                aria-label="Sage Green"
+                                aria-label="{{ 'settings.appearance.palette.sage'|trans(domain: 'admin') }}"
                                 style="--swatch-color: #7FA030"
-                                title="Sage Green">
+                                title="{{ 'settings.appearance.palette.sage'|trans(domain: 'admin') }}">
                         </button>
                         <button class="avatar-dropdown-palette-swatch"
                                 data-palette="sunset"
                                 data-action="click->avatar-dropdown#setPalette"
                                 role="radio"
                                 aria-checked="false"
-                                aria-label="Sunset Warm"
+                                aria-label="{{ 'settings.appearance.palette.sunset'|trans(domain: 'admin') }}"
                                 style="--swatch-color: #E8876F"
-                                title="Sunset Warm">
+                                title="{{ 'settings.appearance.palette.sunset'|trans(domain: 'admin') }}">
                         </button>
                         <button class="avatar-dropdown-palette-swatch"
                                 data-palette="lavender"
                                 data-action="click->avatar-dropdown#setPalette"
                                 role="radio"
                                 aria-checked="false"
-                                aria-label="Soft Lavender"
+                                aria-label="{{ 'settings.appearance.palette.lavender'|trans(domain: 'admin') }}"
                                 style="--swatch-color: #8B7AAF"
-                                title="Soft Lavender">
+                                title="{{ 'settings.appearance.palette.lavender'|trans(domain: 'admin') }}">
                         </button>
                     </div>
                 </div>

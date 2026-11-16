@@ -40,7 +40,7 @@
                                 <li class="whats-new-item">
                                     <div class="whats-new-item-meta">
                                         <span class="whats-new-item-date">
-                                            {{ 'whats_new.published_on'|trans({'%date%': item.publishedAt|date('M d, Y')}, 'admin') }}
+                                            {{ 'whats_new.published_on'|trans({'%date%': item.publishedAt|ldate}, 'admin') }}
                                         </span>
                                         {% if item.publishedAt > previous_seen_at %}
                                             <span class="whats-new-badge-new">{{ 'whats_new.new_badge'|trans(domain: 'admin') }}</span>

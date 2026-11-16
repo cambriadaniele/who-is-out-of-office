@@ -1,0 +1,4 @@
+leave_request:
+    type:
+        sick_leave: 'Krankheit'
+        vacation: 'Ferien'

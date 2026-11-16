@@ -50,9 +50,9 @@
                                 </td>
                                 <td>
                                     {% if leaveRequestDto.startDate|date('Y-m-d') == leaveRequestDto.endDate|date('Y-m-d') %}
-                                        {{ leaveRequestDto.startDate|date("M d") }}
+                                        {{ leaveRequestDto.startDate|ldate('short') }}
                                     {% else %}
-                                        {{ leaveRequestDto.startDate|date("M d") }} – {{ leaveRequestDto.endDate|date("M d") }}
+                                        {{ leaveRequestDto.startDate|ldate('short') }} – {{ leaveRequestDto.endDate|ldate('short') }}
                                     {% endif %}
                                 </td>
                                 <td>
@@ -60,7 +60,7 @@
                                 </td>
                                 <td>
                                     <span class="status-badge status-{{ leaveRequestDto.status.value }}">
-                                        {{ leaveRequestDto.status.value|capitalize }}
+                                        {{ ('leave_request.status.'~leaveRequestDto.status.value)|trans(domain: 'admin') }}
                                     </span>
                                 </td>
                                 <td>
@@ -115,7 +115,7 @@
                                 </div>
                                 <span class="m-request-name">{{ userDto.firstName }} {{ userDto.lastName }}</span>
                                 <span class="status-badge status-{{ leaveRequestDto.status.value }}">
-                                    {{ leaveRequestDto.status.value|capitalize }}
+                                    {{ ('leave_request.status.'~leaveRequestDto.status.value)|trans(domain: 'admin') }}
                                 </span>
                             </div>
                             <div class="m-request-bottom">
@@ -124,9 +124,9 @@
                                 <span class="m-request-sep">&middot;</span>
                                 <span>
                                     {% if leaveRequestDto.startDate|date('Y-m-d') == leaveRequestDto.endDate|date('Y-m-d') %}
-                                        {{ leaveRequestDto.startDate|date("M d") }}
+                                        {{ leaveRequestDto.startDate|ldate('short') }}
                                     {% else %}
-                                        {{ leaveRequestDto.startDate|date("M d") }} – {{ leaveRequestDto.endDate|date("M d") }}
+                                        {{ leaveRequestDto.startDate|ldate('short') }} – {{ leaveRequestDto.endDate|ldate('short') }}
                                     {% endif %}
                                 </span>
                                 <span class="m-request-sep">&middot;</span>

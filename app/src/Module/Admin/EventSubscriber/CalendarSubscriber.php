@@ -11,13 +11,14 @@ use App\Shared\Enum\LeaveRequestStatusEnum;
 use App\Shared\Facade\HolidayFacadeInterface;
 use App\Shared\Facade\LeaveRequestFacadeInterface;
 use App\Shared\Facade\UserFacadeInterface;
+use App\Shared\Service\DateLocalizer;
+use CalendarBundle\Entity\Event;
 use CalendarBundle\Event\SetDataEvent;
+use Ramsey\Uuid\Uuid;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use CalendarBundle\Entity\Event;
-use Ramsey\Uuid\Uuid;
 
 class CalendarSubscriber implements EventSubscriberInterface
 {
@@ -28,6 +29,7 @@ class CalendarSubscriber implements EventSubscriberInterface
         private readonly UrlGeneratorInterface $urlGenerator,
         private readonly Security $security,
         private readonly TranslatorInterface $translator,
+        private readonly DateLocalizer $dateLocalizer,
     ) {
     }
 
@@ -129,8 +131,8 @@ class CalendarSubscriber implements EventSubscriberInterface
                     'employeeName' => sprintf('%s %s', $dto->user->firstName, $dto->user->lastName),
                     'workDays' => $dto->workDays,
                     'comment' => $dto->comment,
-                    'startDate' => $dto->startDate->format('M j, Y'),
-                    'endDate' => $dto->endDate->format('M j, Y'),
+                    'startDate' => $this->dateLocalizer->format($dto->startDate),
+                    'endDate' => $this->dateLocalizer->format($dto->endDate),
                     'detailUrl' => $this->urlGenerator->generate('app_dashboard_app_leave_request_detail', [
                         'entityId' => $dto->id->toString(),
                     ]),
@@ -192,7 +194,7 @@ class CalendarSubscriber implements EventSubscriberInterface
                     'type' => 'birthday',
                     'userId' => $userDTO->id,
                     'employeeName' => sprintf('%s %s', $userDTO->firstName, $userDTO->lastName),
-                    'date' => $birthdayThisYear->format('M j'),
+                    'date' => $this->dateLocalizer->format($birthdayThisYear, DateLocalizer::STYLE_SHORT),
                 ],
             ]);
 
@@ -249,7 +251,7 @@ class CalendarSubscriber implements EventSubscriberInterface
                 'extendedProps' => [
                     'type' => 'holiday',
                     'description' => $holidayDTO->description,
-                    'date' => $holidayDTO->date->format('M j, Y'),
+                    'date' => $this->dateLocalizer->format($holidayDTO->date),
                     'isGlobal' => $holidayDTO->isGlobal,
                     'counties' => $this->translateCounties($holidayDTO->counties),
                 ],

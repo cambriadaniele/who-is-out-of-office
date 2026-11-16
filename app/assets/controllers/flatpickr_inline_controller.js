@@ -1,5 +1,6 @@
 import { Controller } from '@hotwired/stimulus';
 import flatpickr from 'flatpickr';
+import { flatpickrLocale } from '../flatpickr_locale.js';
 
 export default class extends Controller {
   static targets = ['input', 'calendar'];
@@ -20,7 +21,7 @@ export default class extends Controller {
       appendTo: this.calendarTarget,
       minDate: new Date(now.getFullYear() - 1, 0, 1),
       maxDate: new Date(now.getFullYear() + 1, 11, 31),
-      locale: { firstDayOfWeek: 1 },
+      locale: flatpickrLocale(),
       onChange: () => {
         this.inputTarget.dispatchEvent(new Event('input', { bubbles: true }));
       },

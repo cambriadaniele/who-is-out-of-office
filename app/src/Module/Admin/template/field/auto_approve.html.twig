@@ -12,7 +12,7 @@
         data-auto-approve-countdown-minutes-value="{{ 'crud.leave_requests.auto_approve_countdown.unit_minutes'|trans(domain: 'admin') }}"
         data-auto-approve-countdown-seconds-value="{{ 'crud.leave_requests.auto_approve_countdown.unit_seconds'|trans(domain: 'admin') }}"
     >
-        <time datetime="{{ target }}">{{ target|date('M j, Y H:i') }}</time>
+        <time datetime="{{ target }}">{{ target|ldate('datetime') }}</time>
         {% if date(target) < date() %}
             <span class="auto-approve-countdown__overdue">{{ 'crud.leave_requests.auto_approve_countdown.overdue'|trans(domain: 'admin') }}</span>
         {% endif %}

@@ -1,0 +1,11 @@
+user:
+    adjust_balance:
+        validation:
+            non_zero: 'Eine Anpassung muss den Saldo verändern.'
+            range: 'Die Anpassung muss zwischen {{ min }} und {{ max }} Tagen liegen.'
+
+leave_request:
+    validation:
+        insufficient_balance: 'Dein Saldo reicht für diesen Antrag nicht aus.'
+
+'Enter a 6-digit code': 'Gib einen 6-stelligen Code ein'

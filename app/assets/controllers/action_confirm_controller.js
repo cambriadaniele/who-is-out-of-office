@@ -87,7 +87,7 @@ export default class extends Controller {
                         this._showToast(data.message, 'success');
                         setTimeout(() => window.location.reload(), 600);
                     } else {
-                        this._updateRow(row, data.status);
+                        this._updateRow(row, data.status, data.statusLabel);
                         this._showToast(data.message, 'success');
                     }
                 } else {
@@ -114,13 +114,13 @@ export default class extends Controller {
         }
     }
 
-    _updateRow(row, status) {
+    _updateRow(row, status, statusLabel) {
         if (!row) return;
 
         const badge = row.querySelector('.status-badge');
         if (badge) {
             badge.className = 'status-badge status-' + status;
-            badge.textContent = status.charAt(0).toUpperCase() + status.slice(1);
+            badge.textContent = statusLabel || status.charAt(0).toUpperCase() + status.slice(1);
         }
 
         row.querySelectorAll('[data-lr-action]').forEach(el => el.remove());

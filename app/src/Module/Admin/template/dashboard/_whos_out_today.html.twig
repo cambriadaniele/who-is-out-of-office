@@ -38,7 +38,7 @@
                                 <span class="whos-out-badge" style="background-color: {{ leaveRequestDto.leaveType.backgroundColor }}; color: {{ leaveRequestDto.leaveType.textColor }};">
                                     {{ leaveRequestDto.leaveType.name }}
                                 </span>
-                                {{ 'dashboard.whos_out_today.returns'|trans({'%date%': leaveRequestDto.endDate|date("M d")}, domain: 'admin') }}
+                                {{ 'dashboard.whos_out_today.returns'|trans({'%date%': leaveRequestDto.endDate|ldate('short')}, domain: 'admin') }}
                             </div>
                         </div>
                     </div>

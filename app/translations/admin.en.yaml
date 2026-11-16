@@ -146,7 +146,16 @@ dashboard:
         app_settings: App Settings
         my_profile: My Profile
 
+common:
+    close: Close
+
 leave_request:
+    status:
+        pending: Pending
+        approved: Approved
+        rejected: Rejected
+        cancelled: Cancelled
+        withdrawn: Withdrawn
     action:
         approve_confirm_title: Approve Leave Request
         approve_confirm_body: Are you sure you want to approve this leave request?
@@ -169,6 +178,7 @@ leave_request:
             only_pending_approve: Only pending requests can be approved.
             only_pending_reject: Only pending requests can be rejected.
     new:
+        created: The leave request has been created.
         page_title: New Absence Request
         heading: Create New Absence Request
         cancel: Cancel
@@ -180,6 +190,12 @@ leave_request:
         no_balance_box: "Oops! It looks like you don't have enough leave days to cover this request.</br>You currently have <strong>%remaining%</strong> days of leave balance remaining."
 
 calendar:
+    button:
+        today: Today
+        month: Month
+        list: List
+    no_events: No absences to display
+    more: more
     page_title: Team Calendar
     subscribe: Subscribe
     subscription:

@@ -25,7 +25,7 @@
         <div class="week-days" data-week-scroll-target="container">
             {% for day in this.days %}
                 <div class="week-day{{ day.isToday ? ' today' : '' }}" data-week-scroll-target="day">
-                    <div class="week-day-name">{{ day.dayName }}</div>
+                    <div class="week-day-name">{{ day.date|ldate('weekday') }}</div>
                     <div class="week-day-num">{{ day.dayNumber }}</div>
                     {% if day.absenceCount > 0 %}
                         <div class="week-day-count has-leaves">{{ day.absenceCount }} {{ 'dashboard.week_strip.out'|trans(domain: 'admin') }}</div>

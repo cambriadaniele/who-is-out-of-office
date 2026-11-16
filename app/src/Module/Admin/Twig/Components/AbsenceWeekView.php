@@ -6,6 +6,7 @@ namespace App\Module\Admin\Twig\Components;
 
 use App\Shared\DTO\Dashboard\DailyAbsenceSummaryDTO;
 use App\Shared\Facade\LeaveRequestFacadeInterface;
+use App\Shared\Service\DateLocalizer;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
@@ -21,6 +22,7 @@ class AbsenceWeekView
 
     public function __construct(
         private readonly LeaveRequestFacadeInterface $leaveRequestFacade,
+        private readonly DateLocalizer $dateLocalizer,
     ) {
     }
 
@@ -54,11 +56,11 @@ class AbsenceWeekView
         $monday = $this->getWeekStartDate();
         $friday = $monday->modify('+4 days');
 
-        if ($monday->format('M') === $friday->format('M')) {
-            return sprintf('%s %s–%s, %s', $monday->format('M'), $monday->format('j'), $friday->format('j'), $friday->format('Y'));
-        }
-
-        return sprintf('%s %s – %s %s, %s', $monday->format('M'), $monday->format('j'), $friday->format('M'), $friday->format('j'), $friday->format('Y'));
+        return sprintf(
+            '%s – %s',
+            $this->dateLocalizer->format($monday, DateLocalizer::STYLE_SHORT),
+            $this->dateLocalizer->format($friday),
+        );
     }
 
     private function getWeekStartDate(): \DateTimeImmutable

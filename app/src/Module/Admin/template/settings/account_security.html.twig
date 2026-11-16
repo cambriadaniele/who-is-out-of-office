@@ -40,7 +40,7 @@
                         </div>
                         <div class="settings-status-row">
                             <div class="settings-status-label">{{ 'settings.account_security.account_info.member_since'|trans(domain='admin') }}</div>
-                            <div class="settings-status-value">{{ user.createdAt|date('M d, Y') }}</div>
+                            <div class="settings-status-value">{{ user.createdAt|ldate }}</div>
                         </div>
                     </div>
                 </div>

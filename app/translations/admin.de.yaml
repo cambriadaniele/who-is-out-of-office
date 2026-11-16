@@ -1,0 +1,898 @@
+role:
+    admin: 'Administrator'
+    manager: 'Vorgesetzte Person'
+    user: 'Mitarbeitende'
+
+menu:
+    organization_chart: 'Organigramm'
+    items:
+        logout: Abmelden
+        dashboard: Übersicht
+        my_team: Meine Organisation
+        leave_request_types: Abwesenheitsarten
+        app_settings: App-Einstellungen
+        profile: Profil
+        calendar: Kalender
+        organization_chart: 'Organigramm'
+        absence_requests: Abwesenheitsanträge
+        public_holidays: Feiertage
+        team_leave_requests: Anträge im Team
+        team_members: Teammitglieder
+        notifications: Benachrichtigungen
+        integrations: Integrationen
+        account_security: Sicherheit
+        appearance: Darstellung
+        balance_history: 'Saldoverlauf'
+    section:
+        my_team: Mein Team
+        organization: Organisation
+        settings: Einstellungen
+        account: Konto
+
+topbar:
+    whats_new: Neuigkeiten
+    unread_notifications: '%count% ungelesen'
+
+sidebar:
+    visit_homepage: whoisooo.app besuchen
+    section:
+        my_leave: Meine Abwesenheiten
+        my_team: Mein Team
+        organization: Organisation
+        settings: Einstellungen
+        account: Konto
+    theme_toggle: Dunkelmodus umschalten
+    collapse: Seitenleiste ein- oder ausklappen
+    menu: Menü öffnen
+
+dropdown:
+    my_profile: Mein Profil
+    appearance: Darstellung
+    slack_connected: Slack verbunden
+    slack_not_configured: Slack nicht eingerichtet
+    theme: Design
+    theme_light: Hell
+    theme_dark: Dunkel
+    theme_auto: Automatisch
+    sign_out: Abmelden
+    palette: Farbpalette
+
+bottom_nav:
+    label: Hauptnavigation
+    home: Start
+    calendar: Kalender
+    request: Antrag
+    requests: Anträge
+    team_requests: Team
+    profile: Profil
+
+
+
+dashboard:
+    balance:
+        view_history: 'Verlauf ansehen'
+    title:
+        my_team: Mein Team
+        employee: Mitarbeitende
+        absences: Abwesenheiten
+        upcoming_absences: Kommende Abwesenheiten
+        slack: Slack-Benachrichtigungen
+        birthdays: Zeit zum Feiern
+    birthdays:
+        no_upcoming: Keine Geburtstage in nächster Zeit
+    work_anniversaries:
+        title: Dienstjubiläen
+        no_upcoming: Keine Dienstjubiläen in nächster Zeit
+    my_team:
+        members: Mitglieder
+        empty: Keine Teammitglieder
+    whos_out_today:
+        title: Wer fehlt heute
+        count: '%count% Personen'
+        empty: Heute fehlt niemand
+        returns: 'Zurück am %date%'
+        showing: '%visible% von %total% angezeigt'
+        see_all: 'Kalender ansehen'
+    week_strip:
+        title: Diese Woche
+        out: abwesend
+        prev: Vorherige Woche
+        next: Nächste Woche
+    upcoming_absences:
+        empty: Keine kommenden Abwesenheiten
+    stats:
+        pending_requests: Offene Anträge
+        awaiting_approval: Warten auf Genehmigung
+        on_leave_today: Heute abwesend
+        team_members: Teammitglieder
+        absences_this_week: Abwesenheiten diese Woche
+        vacation_balance: Mein Feriensaldo
+        days: Tage
+    welcome:
+        greeting: 'Guten Morgen, %name%'
+        greeting_morning: Guten Morgen
+        greeting_afternoon: Guten Tag
+        greeting_evening: Guten Abend
+        balance: 'Du hast dieses Jahr noch %days% Ferientage übrig'
+        request_leave: Abwesenheit beantragen
+        view_calendar: Kalender ansehen
+    recent_requests:
+        title: Offene Anträge
+        view_all: Alle ansehen
+        col:
+            employee: Mitarbeitende
+            type: Art
+            dates: Daten
+            duration: Dauer
+            status: Status
+            actions: Aktionen
+        action:
+            view: Details ansehen
+            approve: Antrag genehmigen
+            reject: Antrag ablehnen
+        showing: '%count% von %total% Anträgen angezeigt'
+        see_all: 'Alle Anträge ansehen'
+        empty: Keine aktuellen Anträge
+    leave_balances:
+        title: Saldi
+        empty: Keine Abwesenheitsarten eingerichtet
+        attribution_note: Bezogene Tage zählen zu dem Ferienjahr, in dem die Abwesenheit beginnt.
+    quick_links:
+        title: Schnellzugriff
+        new_request: Neuer Abwesenheitsantrag
+        team_calendar: Teamkalender
+        leave_requests: Abwesenheitsanträge
+        team_leave_requests: Anträge im Team
+        app_settings: App-Einstellungen
+        my_profile: Mein Profil
+
+common:
+    close: Schliessen
+
+leave_request:
+    status:
+        pending: Offen
+        approved: Genehmigt
+        rejected: Abgelehnt
+        cancelled: Storniert
+        withdrawn: Zurückgezogen
+    action:
+        approve_confirm_title: Antrag genehmigen
+        approve_confirm_body: Möchtest du diesen Antrag wirklich genehmigen?
+        approve_confirm_action: Genehmigen
+        reject_confirm_title: Antrag ablehnen
+        reject_confirm_body: Möchtest du diesen Antrag wirklich ablehnen?
+        reject_confirm_action: Ablehnen
+        withdraw_confirm_title: Antrag zurückziehen
+        withdraw_confirm_body: Möchtest du diesen Antrag wirklich zurückziehen?
+        withdraw_confirm_action: Zurückziehen
+        cancel: Abbrechen
+        success:
+            approved: Antrag genehmigt.
+            rejected: Antrag abgelehnt.
+            withdrawn: Antrag zurückgezogen.
+        error:
+            invalid_csrf: Ungültiges Sicherheitstoken. Bitte lade die Seite neu.
+            access_denied: Zugriff verweigert.
+            status_changed: Der Status dieses Antrags wurde bereits geändert.
+            only_pending_approve: Nur offene Anträge können genehmigt werden.
+            only_pending_reject: Nur offene Anträge können abgelehnt werden.
+    new:
+        created: Der Antrag wurde eingereicht.
+        page_title: Neuer Abwesenheitsantrag
+        heading: Neuen Abwesenheitsantrag erstellen
+        cancel: Abbrechen
+        submit: Antrag einreichen
+        loading: Wird geladen...
+        info_box: 'Es werden <strong>%workdays%</strong> Arbeitstage bezogen. Verbleibender Saldo: <strong>%remaining%</strong>.'
+        min_notice_box: 'Anträge müssen mindestens <strong>%days%</strong> Tage vor dem gewünschten Beginn eingereicht werden.'
+        max_consecutive_box: 'Ein Antrag darf höchstens <strong>%days%</strong> aufeinanderfolgende Arbeitstage umfassen.'
+        no_balance_box: "Hoppla! Dein Saldo reicht für diesen Antrag nicht aus.</br>Du hast aktuell noch <strong>%remaining%</strong> Tage übrig."
+
+calendar:
+    button:
+        today: Heute
+        month: Monat
+        list: Liste
+    no_events: Keine Abwesenheiten in diesem Zeitraum
+    more: weitere
+    page_title: Teamkalender
+    subscribe: Abonnieren
+    subscription:
+        title: Kalender-Abo
+        url_label: Abo-Adresse
+        copy_url: Adresse kopieren
+        copied: Kopiert!
+        regenerate: Neu erzeugen
+        regenerate_confirm_title: Abo-Adresse neu erzeugen
+        regenerate_confirm_body: Die aktuelle Abo-Adresse wird damit ungültig. Kalender-Apps, die die alte Adresse nutzen, werden nicht mehr aktualisiert.
+        regenerate_confirm_action: Adresse neu erzeugen
+        regenerate_cancel: Abbrechen
+        regenerating: Wird erzeugt...
+        regenerated: Neu erzeugt!
+        description: Füge diese Adresse in Google Kalender, Outlook oder Apple Kalender ein, um die Abwesenheiten im Team automatisch zu übernehmen.
+        regenerate_hint: Adresse neu erzeugen? Das geht in deinen
+        profile_settings_link: Profileinstellungen
+    customize:
+        button: "Inhalt des Abos anpassen"
+        modal:
+            title: Kalender-Abo anpassen
+            hint: Lass beide Bereiche auf Automatisch, damit immer dein aktuelles Team und die Feiertage deines Landes erscheinen.
+        section:
+            team: Teammitglieder
+            holidays: Feiertagskalender
+        reset_to_auto: Auf Automatisch zurücksetzen
+        auto: Automatisch
+        custom: Eigene Auswahl
+        team:
+            empty_hint: Du gehörst noch zu keinem Team, deshalb gibt es niemanden zum Auswählen.
+            auto_note: Folgt automatisch deinem Team. Sobald du etwas änderst, gilt deine eigene Auswahl.
+        holidays:
+            empty_hint: Für dein Land und die Länder deiner Teammitglieder gibt es noch keine Feiertagskalender.
+            auto_note: Folgt automatisch den Feiertagen deines Landes.
+        action:
+            save: Speichern
+            cancel: Abbrechen
+        save_success: Abo-Einstellungen gespeichert.
+        save_error: Die Einstellungen konnten nicht gespeichert werden. Bitte versuche es noch einmal.
+        stale_suffix: (gehört nicht mehr zu deinem Team)
+        manager_badge: Vorgesetzte Person
+        my_team_label: "Mein Team (%count%)"
+        expand_reports: "Unterstellte anzeigen"
+        collapse_reports: "Unterstellte ausblenden"
+        include_reports_label: "Unterstellte von %name% einschliessen (%count%)"
+        include_reports_hint: "%name% führt %count% %people%."
+        people_singular: Person
+        people_plural: Personen
+    filter:
+        leave_type: Abwesenheitsart
+        status: Status
+        all_types: Alle Arten
+        all_statuses: Alle Status
+        status_pending: Offen
+        status_approved: Genehmigt
+        colleagues: Kolleginnen und Kollegen
+        all_colleagues: Alle
+        selected_count: '%count% ausgewählt'
+        search_placeholder: Personen suchen...
+        select_all: Alle auswählen
+        clear_all: Auswahl aufheben
+    popover:
+        type: Art
+        status: Status
+        dates: Daten
+        work_days: Arbeitstage
+        days: Tage
+        comment: Kommentar
+        date: Datum
+        view_details: Alle Details ansehen
+        scope: Geltungsbereich
+        scope_global: Landesweit
+        scope_regional: Regional
+
+user:
+    adjust_balance:
+        title: 'Saldo anpassen'
+        current: 'Aktueller Saldo'
+        delta: 'Änderung'
+        delta_help: 'Positive Werte fügen Tage hinzu, negative ziehen Tage ab.'
+        reason: 'Grund'
+        reason_help: 'Wird im Verlauf festgehalten. Pflichtfeld.'
+        submit: 'Anpassung speichern'
+        success: 'Saldo angepasst.'
+    action:
+        reset_password_confirm_title: Passwort zurücksetzen
+        reset_password_confirm_body: Möchtest du das Passwort dieser Person wirklich zurücksetzen? Sie erhält eine E-Mail mit einem Link, um ein neues Passwort zu setzen.
+        reset_password_confirm_action: Passwort zurücksetzen
+        resend_invitation_confirm_title: Einladung erneut senden
+        resend_invitation_confirm_body: Möchtest du die Einladung wirklich erneut senden? Früher verschickte Einladungslinks funktionieren danach nicht mehr.
+        resend_invitation_confirm_action: Einladung erneut senden
+        success:
+            reset_password: Der Link zum Zurücksetzen des Passworts wird verschickt.
+            resend_invitation: Die Einladung wird verschickt.
+        error:
+            invalid_csrf: Ungültiges Sicherheitstoken. Bitte lade die Seite neu.
+            user_inactive: Das Passwort einer inaktiven Person kann nicht zurückgesetzt werden.
+            reset_failed: Das Zurücksetzen des Passworts konnte nicht gestartet werden. Bitte versuche es noch einmal.
+            email_failed: Das Zurücksetzen wurde gestartet, aber die E-Mail konnte nicht verschickt werden. Bitte versuche es noch einmal.
+            user_already_active: Diese Person hat ihr Konto bereits aktiviert.
+            resend_failed: Es konnte keine neue Einladung erstellt werden. Bitte versuche es noch einmal.
+            invitation_email_failed: Die Einladung wurde erstellt, aber die E-Mail konnte nicht verschickt werden. Bitte versuche es noch einmal.
+            resend_conflict: Diese Einladung wird gerade schon erneut gesendet. Bitte versuche es noch einmal.
+            user_not_invited: Für diese Person gibt es keine offene Einladung.
+
+crud:
+    title:
+        leave_requests: Abwesenheitsanträge
+        team_leave_requests: Anträge im Team
+        team_members: Teammitglieder
+        user: Meine Organisation
+
+    user:
+        label:
+            singular: Teammitglied
+            plural: Teammitglieder
+        action:
+            reset_password: Passwort zurücksetzen
+            resend_invitation: Einladung erneut senden
+            adjust_balance: 'Saldo anpassen'
+            balance_history: 'Saldoverlauf'
+        help:
+            current_leave_balance: 'Die Anzahl verfügbarer Ferientage. Ändere sie über die Aktion «Saldo anpassen», damit die Änderung festgehalten wird.'
+            absence_balance_reset_day: 'Das Datum der nächsten jährlichen Zurücksetzung. Es kann nicht mehr geändert werden, sobald das erste Ferienjahr der Person angelegt ist.'
+
+    actions:
+        leave_requests:
+            new: Abwesenheit beantragen
+
+    leave_requests:
+        field:
+            auto_approve: Automatisch genehmigt
+        auto_approve:
+            yes: Ja
+            no: 'Nein'
+            none: '-'
+        auto_approve_countdown:
+            approving: Wird gleich genehmigt
+            overdue: Überfällig - wird gleich genehmigt
+            unit_days: T
+            unit_hours: Std
+            unit_minutes: Min
+            unit_seconds: Sek
+
+    team_leave_requests:
+        detail:
+            title: Details zum Antrag
+        fieldset:
+            request: Antrag
+            details: Details
+        field:
+            employee: Mitarbeitende
+            type: Art
+            from: Von
+            to: Bis
+            comment: Kommentar
+            status: Status
+            work_days: Arbeitstage
+            approved_by: Genehmigt von
+            auto_approved: Automatisch genehmigt
+            created_at: Eingereicht
+        batch:
+            approve: Auswahl genehmigen
+            reject: Auswahl ablehnen
+
+    team_members:
+        detail:
+            title: Details zum Teammitglied
+        tab:
+            general: Allgemein
+            leave_balance: Feriensaldo
+            details: Details
+        field:
+            first_name: Vorname
+            last_name: Nachname
+            email: E-Mail
+            role: Rolle
+            start_date: Eintrittsdatum
+            manager: Vorgesetzte Person
+            annual_allowance: Jahresanspruch
+            current_balance: Aktueller Saldo
+            balance_reset_day: Stichtag der Zurücksetzung
+            birth_date: Geburtsdatum
+            working_days: Arbeitstage
+            active: Aktiv
+
+    user_profile:
+        edit:
+            page_title: Profil
+            title: Profil bearbeiten
+        section:
+            profile_info: Profil
+            employee_of_record: Anstellung
+            notifications: Benachrichtigungen
+            change_password: Passwort ändern
+        field:
+            first_name: Vorname
+            last_name: Nachname
+            working_days: Arbeitstage
+            holiday_calendar: Feiertagskalender
+            holiday_calendar_placeholder: Kalender auswählen
+            subdivision_code: Kanton / Region
+            subdivision_code_placeholder: "Alle Regionen (nur landesweite Feiertage)"
+            subdivision_code_help: "Wähle deinen Kanton, damit nur die landesweiten und die für dich geltenden Feiertage erscheinen."
+            birth_date: Geburtsdatum
+            birth_date_help: Wenn du dein Geburtsdatum angibst und Slack eingerichtet ist, erinnert der Slackbot dein Team vor deinem Geburtstag. So können alle mitfeiern.
+            contract_started_at: Eintrittsdatum
+            contract_started_at_help: Dein Eintrittsdatum wird von der Leitung festgelegt.
+            absence_balance_reset_day: Nächste Zurücksetzung des Saldos
+            absence_balance_reset_day_help: Das nächste Datum, an dem dein Saldo zurückgesetzt wird. Es wird von der Leitung festgelegt.
+            has_celebrate_work_anniversary: Mein Dienstjubiläum feiern
+            has_celebrate_work_anniversary_help: Aktiviere dies, wenn der Slackbot dein Team jedes Jahr an dein Dienstjubiläum erinnern soll.
+            is_email_notifications_enabled: E-Mail-Benachrichtigungen erhalten
+            is_email_notifications_enabled_help: Wenn aktiviert, erhältst du E-Mails zu Änderungen an deinen Anträgen.
+            profile_image: Profilbild
+            profile_image_help: 'JPEG, PNG oder WebP. Höchstens 2 MB.'
+            profile_image_change: 'Foto ändern'
+            profile_image_remove: Entfernen
+        action:
+            save_changes: Änderungen speichern
+        flash:
+            updated: Profil gespeichert!
+        slack_status_sync:
+            label: "Meinen Slack-Status bei Abwesenheit automatisch setzen"
+            help: "Wenn dies aktiviert ist und die Administration den Statusabgleich verbunden hat, wird dein Slack-Status am ersten Tag deiner Abwesenheit gesetzt und am Morgen nach dem letzten Tag wieder entfernt."
+            flash:
+                enabled: 'Der automatische Slack-Status ist für dein Konto aktiviert.'
+                disabled: 'Der automatische Slack-Status ist für dein Konto deaktiviert.'
+                not_connected: 'Verbinde zuerst dein Slack-Konto, bevor du diese Einstellung änderst.'
+        connected_services:
+            title: Verbundene Dienste
+            slack:
+                title: Slack
+                connected: Verbunden
+                not_connected: Nicht verbunden
+                member_id: 'Mitglieds-ID: %id%'
+                connect: Slack verbinden
+                manage: Verwalten
+                description: Erhalte Benachrichtigungen zu Anträgen und Neuigkeiten aus dem Team direkt in Slack.
+                configure: Einrichten
+                modal_title: Slack einrichten
+                modal_field_label: Slack-Mitglieds-ID
+                modal_field_help: 'Öffne dein Slack-Profil, klicke auf das Menü mit den drei Punkten (...) und wähle «Mitglieds-ID kopieren».'
+                modal_save: Speichern
+                modal_saving: Wird gespeichert...
+                modal_disconnect: Trennen
+                modal_cancel: Abbrechen
+            calendar:
+                title: Kalender-Abo
+                description: Abonniere die Abwesenheiten im Team in deiner Kalender-App.
+                copy_url: Adresse kopieren
+                copied: Kopiert!
+                regenerate: Neu erzeugen
+                regenerate_confirm_title: Abo-Adresse neu erzeugen
+                regenerate_confirm_body: Die aktuelle Abo-Adresse wird damit ungültig. Kalender-Apps, die die alte Adresse nutzen, werden nicht mehr aktualisiert.
+                regenerate_confirm_action: Adresse neu erzeugen
+                regenerate_cancel: Abbrechen
+                regenerating: Wird erzeugt...
+                regenerated: Neu erzeugt!
+
+    holiday_calendar:
+        index:
+            title: Feiertage
+        detail:
+            title: Details zum Feiertagskalender
+        field:
+            country_code: Ländercode
+            country_name: Land
+            holidays_count: Feiertage
+            holidays_list: Feiertage
+            is_active: Aktiv
+            last_synced_year: Zuletzt abgeglichenes Jahr
+            date: Datum
+            name: Feiertag
+            no_holidays: Keine Feiertage vorhanden
+            scope: Geltungsbereich
+        badge:
+            global: Landesweit
+            regional: Regional
+        action:
+            toggle_active: Aktivieren / Deaktivieren
+            sync: Jetzt abgleichen
+            import: Kalender hinzufügen
+            delete: Löschen
+        flash:
+            activated: 'Der Kalender %country% wurde aktiviert.'
+            deactivated: 'Der Kalender %country% wurde deaktiviert.'
+            synced: 'Die Feiertage für %country% (%year%) wurden abgeglichen.'
+            delete_error: 'Der Kalender %country% kann nicht gelöscht werden: Ihm sind noch Personen zugewiesen.'
+    holiday_import:
+        title: Feiertagskalender importieren
+        panel:
+            title: Feiertage importieren
+            desc: Wähle ein Land, um dessen Feiertage über die Nager.Date-Schnittstelle zu importieren.
+        field:
+            country: Land
+            year: Jahr
+        action:
+            import: Kalender importieren
+        flash:
+            success: 'Die Feiertage für %country% (%year%) wurden importiert.'
+
+    absence_request_type:
+        index:
+            title: Abwesenheitsarten
+        create:
+            title: Neue Abwesenheitsart erstellen
+        edit:
+            title: Abwesenheitsart bearbeiten
+        detail:
+            title: Details zur Abwesenheitsart
+        action:
+            new: Neue Art hinzufügen
+        sort:
+            help: 'Legt die Reihenfolge fest. Kleinere Zahlen erscheinen zuerst. Leer lassen, wenn die Reihenfolge egal ist.'
+        slack_status_emoji: 'Emoji für den Slack-Status'
+        slack_status_emoji.help: 'Slack-Emoji-Code mit Doppelpunkten, z. B. :palm_tree:. Wird für den automatischen Status bei dieser Abwesenheitsart verwendet. Leer lassen für :calendar:.'
+
+    app_settings:
+        source_filename: Quelldatei der App-Einstellungen
+        edit:
+            title: App-Einstellungen
+        panel:
+            leave_request: Einstellungen für Anträge
+            leave_request_desc: Lege fest, ob und nach welcher Wartezeit Anträge automatisch genehmigt werden.
+            leave_defaults: Standardwerte und Grenzen
+            leave_defaults_desc: Lege die Standardwerte für den Ferienanspruch und die Regeln für Anträge fest.
+            slack: Slack-Integration
+            slack_desc: Richte Slack-Benachrichtigungen und den automatischen Status für abwesende Personen ein.
+            weekly_digest: Zeitplan der Wochenübersicht
+            weekly_digest_desc: Lege fest, wann die Wochenübersicht in Slack verschickt wird. Änderungen gelten ab dem nächsten Durchlauf.
+            organization: Organisation
+            organization_desc: Der Name der Organisation, wie er in E-Mails und deren Fusszeile erscheint.
+        field:
+            auto_approve: Automatisch genehmigen
+            auto_approve_delay: Wartezeit bis zur automatischen Genehmigung (Minuten)
+            auto_approve_delay_help: Anzahl Minuten, nach denen ein Antrag automatisch genehmigt wird
+            default_annual_allowance: Standard-Jahresanspruch (Tage)
+            default_annual_allowance_help: Anzahl Ferientage pro Jahr für neue Mitarbeitende
+            min_notice_days: Mindestvorlauf (Tage)
+            min_notice_days_help: So viele Tage im Voraus muss ein Antrag mindestens eingereicht werden (0 = kein Mindestvorlauf)
+            max_consecutive_days: Höchstzahl aufeinanderfolgender Tage
+            max_consecutive_days_help: So viele aufeinanderfolgende Tage darf ein Antrag höchstens umfassen (0 = unbegrenzt)
+            skip_weekend_holidays: Feiertage am Wochenende auslassen
+            skip_weekend_holidays_help: Wenn aktiviert, erscheinen Feiertage, die auf einen Samstag oder Sonntag fallen, nicht in der Wochenübersicht in Slack
+            slack_status_sync_enabled: Automatischen Slack-Status aktivieren
+            slack_status_sync_enabled_help: Wenn aktiviert, wird der Slack-Status einer Person während einer genehmigten Abwesenheit automatisch gesetzt und danach wieder entfernt. Benötigt einen kostenpflichtigen Slack-Workspace und ein autorisiertes Admin-Token.
+            weekly_digest_day: Versandtag
+            weekly_digest_day_help: Wochentag, an dem die Übersicht verschickt wird
+            weekly_digest_time: Versandzeit
+            weekly_digest_time_help: Ortszeit, zu der die Übersicht verschickt wird (24 Stunden, HH:MM)
+            weekly_digest_time_invalid: Gib eine gültige Uhrzeit im Format HH:MM ein
+            weekly_digest_timezone: Zeitzone
+            weekly_digest_timezone_help: Zeitzone, in der die Versandzeit gilt
+            organization_name: Name der Organisation
+            organization_name_help: Erscheint in der Fusszeile von E-Mails und in Einladungen. Bitte kurz halten (höchstens 120 Zeichen).
+        day:
+            MON: Montag
+            TUE: Dienstag
+            WED: Mittwoch
+            THU: Donnerstag
+            FRI: Freitag
+            SAT: Samstag
+            SUN: Sonntag
+        action:
+            save: Änderungen speichern
+
+settings:
+    status:
+        label: Status
+        connected: Verbunden
+        not_configured: Nicht eingerichtet
+        configured: Eingerichtet
+        active: Aktiv
+        inactive: Inaktiv
+        incomplete: Unvollständig eingerichtet
+        needs_auth: Autorisierung nötig
+        disabled: Deaktiviert
+        missing_vars: "Fehlende Variablen:"
+    notifications:
+        title: Benachrichtigungen
+        env_hint: Die Benachrichtigungen werden über Umgebungsvariablen eingerichtet. Wende dich für Änderungen an die Person, die das System betreut.
+        slack:
+            title: Slack-Workspace
+            desc: Über Slack werden Benachrichtigungen zu Anträgen und die Wochenübersicht an dein Team verschickt.
+            workspace: Verbindung zum Workspace
+            signing_secret: Signing Secret
+        channels:
+            title: Kanäle für Benachrichtigungen
+            desc: Lege fest, welche Slack-Kanäle automatische Benachrichtigungen erhalten.
+            approval: Benachrichtigungen zu Genehmigungen
+            weekly_digest: Wochenübersicht
+    integrations:
+        title: Integrationen
+        slack:
+            title: Slack
+            desc: Benachrichtigungen, Genehmigungen, Wochenübersicht und automatischer Status.
+        slack_notifications:
+            title: Benachrichtigungen
+        slack_status_sync:
+            title: Statusabgleich
+            desc: Setzt und entfernt den Slack-Status automatisch, wenn jemand genehmigt abwesend ist. Benötigt einen kostenpflichtigen Slack-Workspace.
+        calendar:
+            title: Kalender-Abo (iCal)
+            desc: Alle können die Abwesenheiten im Team per iCal in ihrer Kalender-App abonnieren.
+        date_nager:
+            title: Feiertags-Schnittstelle
+            desc: Automatischer Import der Feiertage pro Land über Nager.Date.
+    account_security:
+        title: Konto und Sicherheit
+        account_info:
+            title: Kontoangaben
+            email: E-Mail
+            role: Rolle
+            member_since: Mitglied seit
+        change_password:
+            title: Passwort ändern
+            desc: Wähle ein sicheres Passwort mit mindestens 8 Zeichen.
+        field:
+            current_password: Aktuelles Passwort
+            new_password: Neues Passwort
+            confirm_password: Neues Passwort bestätigen
+        error:
+            passwords_must_match: Die beiden Passwörter müssen übereinstimmen.
+            current_password_invalid: Das aktuelle Passwort ist falsch.
+        success:
+            password_changed: Dein Passwort wurde geändert.
+        action:
+            update_password: Passwort ändern
+    two_factor:
+        info:
+            already_enabled: Die Zwei-Faktor-Authentifizierung ist für dein Konto bereits aktiviert.
+        setup:
+            title: Zwei-Faktor-Authentifizierung einrichten
+            step1:
+                title: "Schritt 1: QR-Code scannen"
+                desc: Scanne diesen QR-Code mit deiner Authenticator-App (Google Authenticator, Authy, 1Password usw.)
+                manual_entry: "Scannen klappt nicht? Gib diesen Schlüssel von Hand ein:"
+                copy_key: Kopieren
+                copied: Kopiert!
+            step2:
+                title: "Schritt 2: Bestätigen"
+                desc: Gib dein aktuelles Passwort und den 6-stelligen Code aus deiner Authenticator-App ein, um die Einrichtung abzuschliessen.
+            field:
+                current_password: Aktuelles Passwort
+                verification_code: Bestätigungscode
+            error:
+                invalid_code: Der Bestätigungscode ist ungültig. Prüfe, ob du den richtigen QR-Code gescannt hast, und versuche es noch einmal.
+                invalid_password: Das aktuelle Passwort ist falsch.
+            action:
+                verify_and_enable: Bestätigen und 2FA aktivieren
+                cancel: Abbrechen
+        recovery_codes:
+            title: Wiederherstellungscodes
+            save_title: Speichere deine Wiederherstellungscodes
+            save_desc: Mit diesen Codes kommst du in dein Konto, wenn du dein Gerät mit der Authenticator-App verlierst. Jeder Code funktioniert nur einmal.
+            warning: Bewahre diese Codes an einem sicheren Ort auf. Du kannst sie später nicht mehr anzeigen.
+            manage_title: Wiederherstellungscodes
+            manage_desc: Erzeuge neue Wiederherstellungscodes. Bestätige mit deinem aktuellen Passwort. Die bisherigen Codes funktionieren danach sofort nicht mehr.
+            password_label: Aktuelles Passwort
+            action:
+                done: Ich habe meine Codes gespeichert
+        status:
+            title: Zwei-Faktor-Authentifizierung
+            enabled: Aktiviert
+            disabled: Deaktiviert
+            desc_enabled: Dein Konto ist mit der Zwei-Faktor-Authentifizierung geschützt.
+            desc_disabled: Schütze dein Konto zusätzlich, indem beim Anmelden ein Code aus deiner Authenticator-App verlangt wird.
+            disabled_success: Die Zwei-Faktor-Authentifizierung wurde deaktiviert.
+        action:
+            enable: 2FA aktivieren
+            disable: 2FA deaktivieren
+            regenerate_codes: Wiederherstellungscodes neu erzeugen
+        disable:
+            title: Zwei-Faktor-Authentifizierung deaktivieren
+            desc: Gib dein aktuelles Passwort und einen Code aus deiner Authenticator-App ein, um 2FA zu deaktivieren.
+            field:
+                password: Aktuelles Passwort
+                totp_code: Code aus der Authenticator-App
+            error:
+                invalid_password: Das Passwort ist falsch.
+                invalid_code: Der Code aus der Authenticator-App ist ungültig.
+            action:
+                confirm_disable: 2FA deaktivieren
+                cancel: Abbrechen
+        regenerate:
+            confirm: Bist du sicher? Alle bisherigen Wiederherstellungscodes werden ungültig.
+            confirm_title: Wiederherstellungscodes neu erzeugen?
+            confirm_body: Alle bisherigen Wiederherstellungscodes werden sofort ungültig. Gespeicherte oder ausgedruckte Codes funktionieren nicht mehr. Stelle sicher, dass du die neuen gleich aufbewahren kannst.
+            confirm_action: Codes neu erzeugen
+            cancel: Abbrechen
+    appearance:
+        title: Darstellung
+        theme:
+            title: Design
+            desc: Lege fest, wie die Anwendung aussieht.
+            light: Hell
+            dark: Dunkel
+            auto: System
+        palette:
+            title: Farbpalette
+            desc: Wähle eine Farbpalette. Sie bestimmt die Akzentfarben in der ganzen Anwendung.
+            teal: Warmes Petrol
+            sage: Salbeigrün
+            sunset: Abendrot
+            lavender: Zarter Lavendel
+        field:
+            theme: Design
+            palette: Farbpalette
+        success:
+            saved: Darstellung gespeichert.
+        action:
+            save: Änderungen speichern
+
+subdivision:
+    DE-BW: Baden-Württemberg
+    DE-BY: Bayern
+    DE-BE: Berlin
+    DE-BB: Brandenburg
+    DE-HB: Bremen
+    DE-HH: Hamburg
+    DE-HE: Hessen
+    DE-MV: Mecklenburg-Vorpommern
+    DE-NI: Niedersachsen
+    DE-NW: Nordrhein-Westfalen
+    DE-RP: Rheinland-Pfalz
+    DE-SL: Saarland
+    DE-SN: Sachsen
+    DE-ST: Sachsen-Anhalt
+    DE-SH: Schleswig-Holstein
+    DE-TH: Thüringen
+    CH-AG: Aargau
+    CH-AR: Appenzell Ausserrhoden
+    CH-AI: Appenzell Innerrhoden
+    CH-BL: Basel-Landschaft
+    CH-BS: Basel-Stadt
+    CH-BE: Bern
+    CH-FR: Freiburg
+    CH-GE: Genf
+    CH-GL: Glarus
+    CH-GR: Graubünden
+    CH-JU: Jura
+    CH-LU: Luzern
+    CH-NE: Neuenburg
+    CH-NW: Nidwalden
+    CH-OW: Obwalden
+    CH-SG: St. Gallen
+    CH-SH: Schaffhausen
+    CH-SZ: Schwyz
+    CH-SO: Solothurn
+    CH-TG: Thurgau
+    CH-TI: Tessin
+    CH-UR: Uri
+    CH-VD: Waadt
+    CH-VS: Wallis
+    CH-ZG: Zug
+    CH-ZH: Zürich
+    ES-AN: Andalusien
+    ES-AR: Aragonien
+    ES-AS: Asturien
+    ES-CB: Kantabrien
+    ES-CL: Kastilien und León
+    ES-CM: Kastilien-La Mancha
+    ES-CT: Katalonien
+    ES-CE: Ceuta
+    ES-EX: Extremadura
+    ES-GA: Galicien
+    ES-IB: Balearen
+    ES-CN: Kanarische Inseln
+    ES-RI: La Rioja
+    ES-MD: Madrid
+    ES-ML: Melilla
+    ES-MC: Murcia
+    ES-NC: Navarra
+    ES-PV: Baskenland
+    ES-VC: Valencia
+    GB-ENG: England
+    GB-NIR: Nordirland
+    GB-SCT: Schottland
+    GB-WLS: Wales
+    IT-32: Trentino-Südtirol
+
+two_factor_auth:
+    page_title: "Who's OOO | Identität bestätigen"
+    title: Zwei-Faktor-Authentifizierung
+    desc: Gib den 6-stelligen Code aus deiner Authenticator-App ein.
+    field:
+        code: Authentifizierungscode
+    error:
+        invalid_code: Der eingegebene Code ist ungültig oder abgelaufen. Bitte versuche es noch einmal.
+        too_many_attempts: Zu viele Versuche. Bitte versuche es später noch einmal.
+    action:
+        verify: Bestätigen
+        use_recovery_code: Stattdessen einen Wiederherstellungscode verwenden
+        cancel_login: Abbrechen und zurück zur Anmeldung
+
+error:
+    invalid_csrf_token: Ungültiges Sicherheitstoken. Bitte lade die Seite neu.
+
+csrf:
+    invalid: 'Ungültiges Sicherheitstoken. Bitte lade die Seite neu.'
+
+slack_status_sync:
+    page:
+        title: 'Automatischer Slack-Status'
+    card:
+        title: 'Automatischer Slack-Status'
+        desc: "Setzt den Slack-Status einer Person (Text und Emoji) am ersten Tag einer genehmigten Abwesenheit und entfernt ihn am Tag nach deren Ende. Benötigt einen kostenpflichtigen Slack-Workspace."
+    authorized_by: 'Autorisiertes Slack-Konto'
+    connected_at: 'Verbunden am'
+    action:
+        authorize: 'Statusabgleich autorisieren'
+        revoke: 'Autorisierung widerrufen'
+    oauth:
+        connected: 'Der automatische Slack-Status ist jetzt aktiv.'
+        revoked: 'Der automatische Slack-Status wurde deaktiviert.'
+        invalid_state: 'Die Slack-Anmeldung konnte nicht bestätigt werden. Bitte versuche es noch einmal.'
+        failed: 'Die Slack-Autorisierung ist fehlgeschlagen: %reason%'
+
+whats_new:
+    title: Neuigkeiten
+    section:
+        blog: Aus dem Blog
+        changelog: Produktneuheiten
+        announcements: Ankündigungen
+    empty: Noch nichts Neues. Schau bald wieder vorbei.
+    new_badge: Neu
+    read_more: Weiterlesen
+    published_on: 'Veröffentlicht am %date%'
+
+organization_chart:
+    title: 'Organigramm'
+    empty: 'Noch keine Personen vorhanden.'
+    toggle: 'Unterstellte ein- oder ausblenden'
+    collapse: 'Einklappen'
+    expand_all: 'Alle ausklappen'
+    first_level: 'Nur erste Ebene'
+    role:
+        admin: 'Admin'
+        manager: 'Vorgesetzte Person'
+        user: 'Mitarbeitende'
+
+balance_history:
+    title: 'Saldoverlauf'
+    subtitle: 'Wofür deine Ferientage verwendet wurden, neueste Änderung zuerst.'
+    admin_subtitle: 'Wofür die Ferientage dieser Person verwendet wurden, neueste Änderung zuerst.'
+    empty: 'Noch keine Einträge. Sie erscheinen, sobald eine Abwesenheit gebucht wird oder sich der Saldo ändert.'
+    period: 'Ferienjahr'
+    attribution_note: 'Jeder Eintrag zählt zu dem Ferienjahr, in dem er erfasst wurde. Das ist nicht immer das Jahr, in das die Abwesenheit fällt.'
+    period.open: '(laufend)'
+    pagination:
+        label: 'Seiten des Saldoverlaufs'
+        previous: 'Neuere Einträge'
+        next: 'Ältere Einträge'
+    statement:
+        opened: 'Anfangssaldo'
+        granted: 'Gutgeschrieben'
+        used: 'Bezogen'
+        restored: 'Zurückerhalten'
+        adjusted: 'Angepasst'
+        current: 'Aktueller Saldo'
+    table:
+        date: 'Datum'
+        description: 'Beschreibung'
+        source: 'Quelle'
+        actor: 'Ausgeführt von'
+        transition: 'Vorher → Nachher'
+        change: 'Änderung'
+        balance_after: 'Saldo danach'
+    actor:
+        system: 'System'
+    source:
+        app: 'App'
+        slack: 'Slack'
+        scheduler: 'Zeitplan'
+        migration: 'Migration'
+    type:
+        opening_balance: 'Anfangssaldo'
+        accrual: 'Jahresanspruch gutgeschrieben'
+        usage: 'Abwesenheit gebucht'
+        restoration: 'Tage zurückerhalten'
+        manual_adjustment: 'Manuelle Anpassung'
+
+# Labels that the code passes as plain English text: the English text is the key.
+'Approve': Genehmigen
+'Reject': Ablehnen
+'Withdraw': Zurückziehen
+'Person': Person
+'Type of the absence': Abwesenheitsart
+'From': Von
+'To': Bis
+'Request absence': Abwesenheit beantragen
+'Details': Details
+'Status': Status
+'Pending': Offen
+'Approved': Genehmigt
+'Rejected': Abgelehnt
+'Cancelled': Storniert
+'Withdrawn': Zurückgezogen
+'Settings updated successfully!': Einstellungen gespeichert!

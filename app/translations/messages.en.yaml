@@ -89,6 +89,7 @@ welcome:
     feature_dark_mode: "Dark mode"
     feature_mobile: "Mobile ready"
     feature_selfhosted: "Self-hosted"
+    supported_by: "Supported by"
     footer_website: "Project website"
     footer_github: "GitHub"
     footer_docs: "Documentation"

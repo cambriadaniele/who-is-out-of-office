@@ -1,0 +1,157 @@
+flash:
+    crud: ~
+
+email:
+    base:
+        title: "Who's OOO"
+        preheader: "Who's OOO - Abwesenheitsplanung"
+        powered_by: "Bereitgestellt von %brand%"
+        rights: "Alle Rechte vorbehalten."
+    common:
+        leave_type: "Abwesenheitsart"
+        duration: "Dauer"
+        duration_value: "%count% Tage"
+        date_range: "Zeitraum"
+        status: "Status"
+        default_leave_type: "Abwesenheit"
+    password_reset:
+        subject: Passwort zurücksetzen
+        preheader: Klicke auf den Link unten, um dein Passwort zurückzusetzen
+        title: Passwort zurücksetzen
+        body: Wir haben eine Anfrage erhalten, dein Passwort zurückzusetzen. Klicke auf die Schaltfläche unten, um ein neues zu wählen.
+        button: Passwort zurücksetzen
+        link_fallback: "Falls die Schaltfläche nicht funktioniert, kopiere diesen Link in deinen Browser:"
+        expiry_note: Dieser Link ist 1 Stunde gültig.
+        footer: "Falls du das nicht angefordert hast, kannst du diese E-Mail ignorieren. Dein Passwort bleibt unverändert."
+    invitation:
+        subject: "Du bist zu Who's OOO eingeladen"
+        preheader: "%inviter_name% hat dich zu Who's OOO eingeladen"
+        heading: "Willkommen bei Who's OOO"
+        intro: "%inviter_name% hat dich eingeladen, die Abwesenheitsplanung von %company% zu nutzen."
+        role_label: "Deine Rolle"
+        role_default: "Teammitglied"
+        organization_label: "Organisation"
+        organization_default: "Deine Organisation"
+        default_inviter: "Jemand aus deinem Team"
+        description: "Who's OOO ist ein einfaches Werkzeug für die Abwesenheitsplanung. Dein Team erfasst damit Ferien und andere Abwesenheiten, bearbeitet Anträge und sieht, wer wann fehlt."
+        button: "Einladung annehmen"
+    leave_request:
+        pending_approval:
+            subject: "Neuer Abwesenheitsantrag von %name%"
+            preheader: "%name% hat einen Antrag für %date% eingereicht"
+            heading: "Antrag wartet auf Genehmigung"
+            intro: "Ein Antrag aus deinem Team wartet darauf, dass du ihn prüfst und darüber entscheidest."
+            employee_label: "Mitarbeitende"
+            reason_label: "Grund"
+            action: "Bitte prüfe den Antrag und entscheide in Who's OOO darüber."
+            button: "Antrag prüfen"
+        approved:
+            subject: "Antrag genehmigt"
+            preheader: "Gute Nachrichten! Dein Antrag für %date% wurde genehmigt"
+            heading: "✓ Antrag genehmigt"
+            greeting: "Hallo %name%,"
+            body: "Gute Nachrichten! Dein Antrag wurde von %approved_by% genehmigt. Deine Abwesenheit ist bestätigt."
+            status: "Genehmigt"
+            approved_by_label: "Genehmigt von"
+            auto_approved: "Automatisch genehmigt"
+            remaining_balance_label: "Verbleibender Saldo"
+            info: "Dein Team wurde über deine Abwesenheit informiert. Denk daran, vor deiner Abwesenheit alles Nötige zu übergeben."
+            button: "Im Kalender ansehen"
+        rejected:
+            subject: "Antrag abgelehnt"
+            preheader: "Dein Antrag wurde abgelehnt"
+            heading: "Antrag abgelehnt"
+            greeting: "Hallo %name%,"
+            body: "Dein Antrag wurde von %rejected_by% abgelehnt. Bitte besprich andere Daten mit deiner vorgesetzten Person."
+            default_rejected_by: "deiner vorgesetzten Person"
+            status: "Abgelehnt"
+            declined_by_label: "Abgelehnt von"
+            info: "Im Teamkalender siehst du freie Daten. Du kannst andere Daten auch mit %rejected_by% besprechen."
+            button: "Zur Übersicht"
+        withdrawn:
+            subject: "%name% hat einen Antrag zurückgezogen"
+            preheader: "%name% hat den Abwesenheitsantrag zurückgezogen"
+            heading: "Antrag zurückgezogen"
+            intro: "%name% hat den Abwesenheitsantrag zurückgezogen. Du musst nichts weiter tun."
+            status: "Zurückgezogen"
+            withdrawn_by_label: "Zurückgezogen von"
+            button: "Zur Übersicht"
+
+welcome:
+    page_title: "Who's OOO | Abwesenheitsplanung"
+    tagline: "Einfache Abwesenheitsplanung für Teams."
+    cta_signin: "Anmelden"
+    cta_dashboard: "Zur Übersicht"
+    cta_github: "Auf GitHub ansehen"
+    feature_calendar: "Teamkalender"
+    feature_approvals: "Genehmigen mit einem Klick"
+    feature_integrations: "Slack & iCal"
+    feature_dark_mode: "Dunkelmodus"
+    feature_mobile: "Für das Handy geeignet"
+    feature_selfhosted: "Selbst betrieben"
+    supported_by: "Unterstützt von"
+    footer_website: "Website des Projekts"
+    footer_github: "GitHub"
+    footer_docs: "Dokumentation"
+    footer_version: "Who's OOO | Quelloffene Abwesenheitsplanung"
+
+login:
+    forgot_password: Passwort vergessen?
+
+password_reset:
+    request:
+        page_title: "Passwort vergessen - Who's OOO"
+        heading: Passwort vergessen?
+        description: Gib deine E-Mail-Adresse ein. Wir schicken dir einen Link, mit dem du dein Passwort zurücksetzen kannst.
+        email_label: E-Mail-Adresse
+        submit: Link senden
+        success: Falls ein Konto mit dieser E-Mail-Adresse existiert, haben wir einen Link zum Zurücksetzen geschickt.
+        back_to_login: Zurück zur Anmeldung
+    new_password: Neues Passwort
+    confirm_password: Neues Passwort bestätigen
+    reset:
+        page_title: "Passwort zurücksetzen - Who's OOO"
+        heading: Passwort zurücksetzen
+        description: Gib unten dein neues Passwort ein.
+        submit: Passwort zurücksetzen
+        success: Dein Passwort wurde zurückgesetzt. Bitte melde dich an.
+        error: Dieser Link ist ungültig oder abgelaufen. Bitte fordere einen neuen an.
+    error:
+        passwords_must_match: Die beiden Passwörter müssen übereinstimmen.
+
+invitation:
+    page_title: "Konto einrichten - Who's OOO"
+    title: Konto einrichten
+    subtitle: Vervollständige dein Profil, um loszulegen.
+    submit: Konto erstellen
+    field:
+        first_name: Vorname
+        last_name: Nachname
+        birth_date: Geburtsdatum
+        birth_date_help: Wenn du dein Geburtsdatum angibst und Slack eingerichtet ist, erinnert der Slackbot dein Team vor deinem Geburtstag.
+        password: Passwort
+        password_repeat: Passwort wiederholen
+
+error:
+    account_not_active: Dein Konto ist nicht aktiv.
+    go_back: Zurück
+    go_to_dashboard: Zur Übersicht
+    403:
+        page_title: "Zugriff verweigert - Who's OOO"
+        title: Zugriff verweigert
+        description: "Du hast keine Berechtigung für diese Seite. Falls das ein Irrtum ist, wende dich an die Administration."
+    404:
+        page_title: "Seite nicht gefunden - Who's OOO"
+        title: Seite nicht gefunden
+        description: "Die gesuchte Seite gibt es nicht oder sie wurde verschoben. Vielleicht hat sie frei genommen."
+    generic:
+        page_title: "Fehler - Who's OOO"
+        code: Hoppla
+        title: Etwas ist schiefgelaufen
+        description: Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es später noch einmal oder geh zurück zur Übersicht.
+
+# Labels that the code passes as plain English text: the English text is the key.
+'What type of absence': Art der Abwesenheit
+'When': Wann
+'Settings updated successfully!': Einstellungen gespeichert!
+'Account activated, please log in.': Konto aktiviert. Bitte melde dich an.

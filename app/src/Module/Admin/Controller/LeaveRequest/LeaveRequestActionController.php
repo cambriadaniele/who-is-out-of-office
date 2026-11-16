@@ -153,6 +153,7 @@ class LeaveRequestActionController extends AbstractController
             'success' => true,
             'message' => $this->translator->trans(sprintf('leave_request.action.success.%s', $statusKey), domain: 'admin'),
             'status' => $dto->status->value,
+            'statusLabel' => $this->translator->trans(sprintf('leave_request.status.%s', $dto->status->value), domain: 'admin'),
             'id' => $dto->id->toString(),
         ]);
     }
@@ -195,7 +196,7 @@ class LeaveRequestActionController extends AbstractController
                 return $this->redirect($this->urlGenerator->generate('app_dashboard_requests_new'));
             }
 
-            $this->addFlash('success', 'The leave request has been created.');
+            $this->addFlash('success', $this->translator->trans('leave_request.new.created', domain: 'admin'));
 
             return $this->redirect($this->urlGenerator->generate('app_dashboard_app_leave_request_index'));
         }

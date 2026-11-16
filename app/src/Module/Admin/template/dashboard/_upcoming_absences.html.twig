@@ -29,7 +29,7 @@
                                 <span class="whos-out-badge" style="background-color: {{ leaveRequestDto.leaveType.backgroundColor }}; color: {{ leaveRequestDto.leaveType.textColor }};">
                                     {{ leaveRequestDto.leaveType.name }}
                                 </span>
-                                {{ leaveRequestDto.startDate|date("M d") }} – {{ leaveRequestDto.endDate|date("M d") }}
+                                {{ leaveRequestDto.startDate|ldate('short') }} – {{ leaveRequestDto.endDate|ldate('short') }}
                             </div>
                         </div>
                     </div>

@@ -15,7 +15,7 @@
             ) %}
             {% for holiday in sorted_holidays %}
                 <tr>
-                    <td>{{ holiday.date|date('M d, Y') }}</td>
+                    <td>{{ holiday.date|ldate }}</td>
                     <td>{{ holiday.description }}</td>
                     <td>
                         {% if holiday.isGlobal %}
