@@ -106,6 +106,12 @@ class UserCrudController extends AppAbstractCrudController
             ->addCssClass('btn btn-outline')
             ->displayIf(fn (User $entity) => $this->isAdmin());
 
+        // Same action without button styling for the row menu of the list.
+        $vacationDaysRowAction = Action::new('vacationDays', 'crud.user.action.vacation_days')
+            ->linkToUrl(fn (User $entity) => $this->urlGenerator->generate('app_user_vacation_days', ['id' => $entity->id]))
+            ->setIcon('icon-sliders')
+            ->displayIf(fn (User $entity) => $this->isAdmin());
+
         $balanceHistoryAction = Action::new('balanceHistory', 'crud.user.action.balance_history')
             ->linkToUrl(fn (User $entity) => $this->urlGenerator->generate('app_user_balance_history', ['id' => $entity->id]))
             ->setIcon('icon-receipt')
@@ -121,7 +127,7 @@ class UserCrudController extends AppAbstractCrudController
             ->add(Crud::PAGE_EDIT, $resetPasswordAction)
             ->add(Crud::PAGE_DETAIL, $resendInvitationAction)
             ->add(Crud::PAGE_EDIT, $resendInvitationAction)
-            ->add(Crud::PAGE_INDEX, $adjustBalanceAction)
+            ->add(Crud::PAGE_INDEX, $vacationDaysRowAction)
             ->add(Crud::PAGE_DETAIL, $adjustBalanceAction)
             ->add(Crud::PAGE_EDIT, $adjustBalanceAction)
             ->add(Crud::PAGE_DETAIL, $balanceHistoryAction)

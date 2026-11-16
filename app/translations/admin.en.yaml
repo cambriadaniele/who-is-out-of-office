@@ -15,6 +15,7 @@ menu:
         calendar: Calendar
         organization_chart: 'Organization Chart'
         absence_requests: Absence Requests
+        school_holidays: 'School holidays'
         public_holidays: Public Holidays
         team_leave_requests: Team Leave Requests
         team_members: Team Members
@@ -328,6 +329,25 @@ user:
             user_not_invited: This user has no pending invitation to resend.
 
 crud:
+    school_holiday:
+        index:
+            title: 'School holidays'
+        edit:
+            title: 'Edit school holidays'
+        create:
+            title: 'Add school holidays'
+        detail:
+            title: 'School holidays'
+        action:
+            new: 'Add school holidays'
+        field:
+            name: 'Name'
+            start: 'From'
+            end: 'To'
+            group: 'Group'
+        help:
+            end: 'Last day of the holidays. For a single day use the same date as "From".'
+            group: 'Shown when the entry is clicked in the calendar, e.g. "School holidays BFS".'
     title:
         leave_requests: Absence Requests
         team_leave_requests: Team Leave Requests

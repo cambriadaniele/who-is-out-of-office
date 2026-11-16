@@ -30,6 +30,7 @@ class CalendarSubscriber implements EventSubscriberInterface
         private readonly Security $security,
         private readonly TranslatorInterface $translator,
         private readonly DateLocalizer $dateLocalizer,
+        private readonly \Doctrine\DBAL\Connection $connection,
     ) {
     }
 
@@ -52,6 +53,7 @@ class CalendarSubscriber implements EventSubscriberInterface
 
         $this->markNonWorkingDaysForUser($event, $currentUserDTO);
         $this->addPublicHolidayEvents($event, $currentUserDTO);
+        $this->addSchoolHolidayEvents($event);
         $this->addLeaveRequestEvents($event, $start, $end, $filters, $currentUserDTO->id);
         $this->addBirthdayEvents($event, $start);
     }
@@ -227,6 +229,43 @@ class CalendarSubscriber implements EventSubscriberInterface
                 ]);
                 $event->addEvent($calendarEvent);
             }
+        }
+    }
+
+    /** Fork: school holidays as plain bars for everyone; information only. */
+    private function addSchoolHolidayEvents(SetDataEvent $event): void
+    {
+        $start = \DateTimeImmutable::createFromInterface($event->getStart());
+        $end = \DateTimeImmutable::createFromInterface($event->getEnd());
+        $rows = $this->connection->fetchAllAssociative(
+            'SELECT group_name, name, start_date, end_date FROM school_holiday WHERE start_date < :end AND end_date >= :start ORDER BY start_date',
+            ['start' => $start->format('Y-m-d'), 'end' => $end->format('Y-m-d')],
+        );
+
+        foreach ($rows as $row) {
+            $from = new \DateTimeImmutable($row['start_date']);
+            $to = new \DateTimeImmutable($row['end_date']);
+            $calendarEvent = new Event(
+                sprintf('🏫 %s', $row['name']),
+                \DateTime::createFromImmutable($from),
+                \DateTime::createFromImmutable($to->modify('+1 day')),
+            );
+            $calendarEvent->setOptions([
+                'backgroundColor' => '#dde9fb',
+                'borderColor' => '#7aa5e6',
+                'textColor' => '#1d4580',
+                'allDay' => true,
+                'extendedProps' => [
+                    'type' => 'holiday',
+                    'description' => sprintf('%s · %s', $row['name'], $row['group_name']),
+                    'date' => $from == $to
+                        ? $this->dateLocalizer->format($from)
+                        : sprintf('%s – %s', $this->dateLocalizer->format($from), $this->dateLocalizer->format($to)),
+                    'isGlobal' => true,
+                    'counties' => [],
+                ],
+            ]);
+            $event->addEvent($calendarEvent);
         }
     }
 

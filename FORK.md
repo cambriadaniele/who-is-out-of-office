@@ -30,6 +30,8 @@ based on upstream commit `e6be329`. Changes on top of upstream:
   days with a required reason: in the current year it is a ledger entry, for a coming year it is stored in
   `user_leave_year_adjustment` and added by the 1 January reset. "Anspruch ändern" sets a coming year's allowance.
   Replaces the old "Saldo anpassen" form (its URL redirects here) and the "2027: 24" text field.
+- **School holidays** (`school_holiday`, admin list "Schulferien" under Einstellungen): shown to everyone as blue bars in
+  the team calendar (🏫, the group name appears on click). Information only, they do not change workdays.
 - **Phones**: list rows (for example the leave requests) are shown as cards instead of stacked label/value rows.
 
 Not translated: Slack messages.

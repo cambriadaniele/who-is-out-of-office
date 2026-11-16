@@ -141,6 +141,12 @@
                     <i data-lucide="globe"></i>
                     <span class="ooo-sidebar-label">{{ 'menu.items.public_holidays'|trans(domain: 'admin') }}</span>
                 </a>
+                <a class="ooo-sidebar-item {{ _current_crud == 'App\\Module\\Admin\\Controller\\SchoolHolidayCrudController' ? 'active' }}"
+                   href="{{ ea_url().setController('App\\Module\\Admin\\Controller\\SchoolHolidayCrudController').setAction('index') }}"
+                   title="{{ 'menu.items.school_holidays'|trans(domain: 'admin') }}">
+                    <i data-lucide="school"></i>
+                    <span class="ooo-sidebar-label">{{ 'menu.items.school_holidays'|trans(domain: 'admin') }}</span>
+                </a>
                 <a class="ooo-sidebar-item {{ _current_route == 'app_settings_integrations' ? 'active' }}"
                    href="{{ path('app_settings_integrations') }}"
                    title="{{ 'menu.items.integrations'|trans(domain: 'admin') }}">

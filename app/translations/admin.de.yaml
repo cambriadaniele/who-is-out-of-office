@@ -15,6 +15,7 @@ menu:
         calendar: Kalender
         organization_chart: 'Organigramm'
         absence_requests: Abwesenheitsanträge
+        school_holidays: 'Schulferien'
         public_holidays: Feiertage
         team_leave_requests: Anträge im Team
         team_members: Teammitglieder
@@ -328,6 +329,25 @@ user:
             user_not_invited: Für diese Person gibt es keine offene Einladung.
 
 crud:
+    school_holiday:
+        index:
+            title: 'Schulferien'
+        edit:
+            title: 'Schulferien bearbeiten'
+        create:
+            title: 'Schulferien erfassen'
+        detail:
+            title: 'Schulferien'
+        action:
+            new: 'Schulferien erfassen'
+        field:
+            name: 'Bezeichnung'
+            start: 'Von'
+            end: 'Bis'
+            group: 'Gruppe'
+        help:
+            end: 'Letzter Ferientag. Für einen einzelnen Tag dasselbe Datum wie «Von».'
+            group: 'Erscheint im Kalender beim Anklicken, z. B. «Schulferien BFS».'
     title:
         leave_requests: Abwesenheitsanträge
         team_leave_requests: Anträge im Team
