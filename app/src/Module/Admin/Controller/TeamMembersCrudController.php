@@ -16,7 +16,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
@@ -95,8 +94,10 @@ class TeamMembersCrudController extends AppAbstractCrudController
         yield TextField::new('firstName', 'crud.team_members.field.first_name');
         yield TextField::new('lastName', 'crud.team_members.field.last_name');
         yield TextField::new('email', 'crud.team_members.field.email');
-        yield ArrayField::new('roles', 'crud.team_members.field.role')
-            ->formatValue(fn (array $roles, User $user): string => $this->roleTranslator->translate($roles));
+        yield TextField::new('roleNames', 'crud.team_members.field.role')
+            ->setVirtual(true)
+            ->hideOnForm()
+            ->formatValue(fn (mixed $value, User $user): string => $this->roleTranslator->translate($user->getRoles()));
         yield DateField::new('contractStartedAt', 'crud.team_members.field.start_date')
             ->hideOnForm();
         yield AssociationField::new('manager', 'crud.team_members.field.manager')
