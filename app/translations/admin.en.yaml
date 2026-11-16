@@ -362,6 +362,8 @@ crud:
             reject: Reject selected
 
     team_members:
+        help:
+            role: 'Everyone is an employee. A manager can approve the requests of their team; an administrator can manage everything.'
         detail:
             title: Team Member Details
         tab:

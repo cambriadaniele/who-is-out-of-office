@@ -7,6 +7,7 @@ twig:
         'src/Infrastructure/Email/template': 'AppEmail'
     globals:
         profile_images_base_path: '%profile_images_base_path%'
+        slack_enabled: '%app.slack_enabled%'
         whoisooo_homepage_url: '@App\Infrastructure\WhoIsOoo\HomepageUrlProvider'
     form_themes:
         - 'forms/form_theme.html.twig'

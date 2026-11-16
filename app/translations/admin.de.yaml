@@ -362,6 +362,8 @@ crud:
             reject: Auswahl ablehnen
 
     team_members:
+        help:
+            role: 'Alle sind Mitarbeitende. Eine vorgesetzte Person darf die Anträge ihres Teams genehmigen, ein Administrator darf alles verwalten.'
         detail:
             title: Details zum Teammitglied
         tab:
@@ -401,13 +403,13 @@ crud:
             subdivision_code_placeholder: "Alle Regionen (nur landesweite Feiertage)"
             subdivision_code_help: "Wähle deinen Kanton, damit nur die landesweiten und die für dich geltenden Feiertage erscheinen."
             birth_date: Geburtsdatum
-            birth_date_help: Wenn du dein Geburtsdatum angibst und Slack eingerichtet ist, erinnert der Slackbot dein Team vor deinem Geburtstag. So können alle mitfeiern.
+            birth_date_help: Wenn du dein Geburtsdatum angibst, sieht dein Team deinen Geburtstag in der Übersicht. So können alle mitfeiern.
             contract_started_at: Eintrittsdatum
             contract_started_at_help: Dein Eintrittsdatum wird von der Leitung festgelegt.
             absence_balance_reset_day: Nächste Zurücksetzung des Saldos
             absence_balance_reset_day_help: Das nächste Datum, an dem dein Saldo zurückgesetzt wird. Es wird von der Leitung festgelegt.
             has_celebrate_work_anniversary: Mein Dienstjubiläum feiern
-            has_celebrate_work_anniversary_help: Aktiviere dies, wenn der Slackbot dein Team jedes Jahr an dein Dienstjubiläum erinnern soll.
+            has_celebrate_work_anniversary_help: Aktiviere dies, wenn dein Dienstjubiläum in der Übersicht deines Teams erscheinen soll.
             is_email_notifications_enabled: E-Mail-Benachrichtigungen erhalten
             is_email_notifications_enabled_help: Wenn aktiviert, erhältst du E-Mails zu Änderungen an deinen Anträgen.
             profile_image: Profilbild

@@ -1,4 +1,6 @@
 parameters:
+    env(SLACK_ENABLED): 'true'
+    app.slack_enabled: '%env(bool:SLACK_ENABLED)%'
     profile_images_base_path: 'uploads/profile_images'
 
 services:

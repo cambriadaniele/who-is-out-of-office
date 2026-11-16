@@ -6,6 +6,7 @@ namespace App\Infrastructure\Ical\Service;
 
 use App\Shared\DTO\Holiday\PublicHolidayDTO;
 use App\Shared\DTO\LeaveRequest\LeaveRequestDTO;
+use App\Shared\Service\DateLocalizer;
 use App\Shared\Service\Messaging\EmojisProvider;
 use Eluceo\iCal\Domain\Entity\Calendar;
 use Eluceo\iCal\Domain\Entity\Event;
@@ -14,9 +15,16 @@ use Eluceo\iCal\Domain\ValueObject\MultiDay;
 use Eluceo\iCal\Domain\ValueObject\SingleDay;
 use Eluceo\iCal\Presentation\Component;
 use Eluceo\iCal\Presentation\Factory\CalendarFactory;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class IcalCalendarBuilder
 {
+    public function __construct(
+        private readonly DateLocalizer $dateLocalizer,
+        private readonly TranslatorInterface $translator,
+    ) {
+    }
+
     /**
      * @param list<LeaveRequestDTO>  $leaveRequests
      * @param list<PublicHolidayDTO> $holidays
@@ -50,8 +58,8 @@ class IcalCalendarBuilder
             $description = sprintf(
                 '%s (%s - %s) %s',
                 $leaveRequestDTO->leaveType->name,
-                $leaveRequestDTO->startDate->format('F d'),
-                $leaveRequestDTO->endDate->format('F d'),
+                $this->dateLocalizer->format($leaveRequestDTO->startDate, DateLocalizer::STYLE_LONG),
+                $this->dateLocalizer->format($leaveRequestDTO->endDate, DateLocalizer::STYLE_LONG),
                 $leaveRequestDTO->comment
             );
 
@@ -79,7 +87,7 @@ class IcalCalendarBuilder
         $events = [];
         foreach ($holidays as $holiday) {
             $summary = sprintf('%s %s', EmojisProvider::getFlagEmojiCode($holiday->countryCode), $holiday->description);
-            $description = sprintf('Public holiday %s', $holiday->description);
+            $description = $this->translator->trans('ical.public_holiday', ['%name%' => $holiday->description]);
 
             $events[] = new Event()
                 ->setSummary($summary)

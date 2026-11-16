@@ -82,6 +82,7 @@
                 </div>
             </div>
 
+            <div{% if not slack_enabled %} hidden{% endif %}>
             <div class="settings-card">
                 <div class="settings-card-header">
                     <h3 class="settings-card-title">{{ 'crud.app_settings.panel.slack'|trans(domain='admin') }}</h3>
@@ -132,6 +133,8 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
             </div>
 
             <div class="settings-card-footer">

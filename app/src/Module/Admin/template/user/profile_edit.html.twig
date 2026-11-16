@@ -189,6 +189,7 @@
                     <h3 class="settings-card-title">{{ 'crud.user_profile.connected_services.title'|trans(domain='admin') }}</h3>
                 </div>
                 <div class="settings-card-body">
+{% if slack_enabled %}
                     <div class="connected-service-row"
                          data-controller="slack-config"
                          data-slack-config-update-url-value="{{ path('app_api_slack_update') }}"
@@ -232,6 +233,7 @@
                         </div>
                     </div>
 
+{% endif %}
                     <div class="connected-service-row">
                         <div class="connected-service-icon">
                             <i data-lucide="calendar"></i>
@@ -275,6 +277,7 @@
 
     {{ include('@AppAdmin/user/_calendar_customize_modal.html.twig') }}
 
+{% if slack_enabled %}
     <div class="modal fade" id="slackConfigModal" tabindex="-1" aria-labelledby="slackConfigModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -305,6 +308,7 @@
         </div>
     </div>
 
+{% endif %}
     <div class="modal fade" id="regenerateConfirmModal" tabindex="-1" aria-labelledby="regenerateConfirmModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">

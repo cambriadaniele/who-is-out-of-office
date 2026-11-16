@@ -16,7 +16,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
@@ -186,9 +185,17 @@ class UserCrudController extends AppAbstractCrudController
                 ->renderExpanded();
 
             yield FormField::addTab('Security')->hideOnDetail();
-            yield ArrayField::new('roles')
+            yield ChoiceField::new('roles', 'crud.team_members.field.role')
+                ->setChoices([
+                    'role.user' => RoleEnum::User->value,
+                    'role.manager' => RoleEnum::Manager->value,
+                    'role.admin' => RoleEnum::Admin->value,
+                ])
+                ->allowMultipleChoices()
+                ->renderExpanded()
+                ->setHelp('crud.team_members.help.role')
                 ->hideOnDetail()
-                ->formatValue(fn (array $roles, User $user): string => $this->roleTranslator->translate($roles));
+                ->formatValue(fn (mixed $value, User $user): string => $this->roleTranslator->translate($user->getRoles()));
 
             yield TextField::new('plainPassword')
                 ->onlyWhenUpdating()->setRequired(false);

@@ -77,6 +77,9 @@ email:
             withdrawn_by_label: "Zurückgezogen von"
             button: "Zur Übersicht"
 
+ical:
+    public_holiday: "Feiertag %name%"
+
 welcome:
     page_title: "Who's OOO | Abwesenheitsplanung"
     tagline: "Einfache Abwesenheitsplanung für Teams."
@@ -85,7 +88,7 @@ welcome:
     cta_github: "Auf GitHub ansehen"
     feature_calendar: "Teamkalender"
     feature_approvals: "Genehmigen mit einem Klick"
-    feature_integrations: "Slack & iCal"
+    feature_integrations: "Kalender-Abo (iCal)"
     feature_dark_mode: "Dunkelmodus"
     feature_mobile: "Für das Handy geeignet"
     feature_selfhosted: "Selbst betrieben"
@@ -128,7 +131,7 @@ invitation:
         first_name: Vorname
         last_name: Nachname
         birth_date: Geburtsdatum
-        birth_date_help: Wenn du dein Geburtsdatum angibst und Slack eingerichtet ist, erinnert der Slackbot dein Team vor deinem Geburtstag.
+        birth_date_help: Wenn du dein Geburtsdatum angibst, sieht dein Team deinen Geburtstag in der Übersicht.
         password: Passwort
         password_repeat: Passwort wiederholen
 

@@ -289,7 +289,8 @@
                             {{ 'dropdown.appearance'|trans(domain: 'admin') }}
                         </a>
                     {% endif %}
-                    {% if _topbar_user.slackIntegration is not null %}
+                    {% if not slack_enabled %}
+                    {% elseif _topbar_user.slackIntegration is not null %}
                         <a class="avatar-dropdown-status"
                            href="{{ path('app_user_profile') }}#slack"
                            role="menuitem">
