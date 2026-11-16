@@ -31,7 +31,8 @@ class UserProfileDTO
         public \DateTimeImmutable $absenceBalanceResetDay = new \DateTimeImmutable('first day of January next year midnight'),
         public ?HolidayCalendar $holidayCalendar = null,
         public ?string $subdivisionCode = null,
-        #[Assert\Image(maxSize: '2M', mimeTypes: ['image/jpeg', 'image/png', 'image/webp'])]
+        // Fork: phone photos are usually 2-6 MB; 2M rejected them. The PHP upload limit in production is 15M too.
+        #[Assert\Image(maxSize: '15M', mimeTypes: ['image/jpeg', 'image/png', 'image/webp'])]
         public ?UploadedFile $profileImageFile = null,
     ) {
     }

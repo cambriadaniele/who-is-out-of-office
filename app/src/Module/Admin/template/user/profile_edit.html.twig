@@ -60,6 +60,8 @@
                             {{ 'crud.user_profile.field.profile_image_help'|trans(domain='admin') }}
                         </div>
                         {{ form_widget(form.profileImageFile, {'attr': {'class': 'profile-avatar-file-input', 'accept': 'image/jpeg,image/png,image/webp'}}) }}
+                        {# Fork: the photo's error was never shown, so a rejected upload looked like nothing happened. #}
+                        {{ form_errors(form.profileImageFile) }}
                         {{ form_widget(form.removeProfileImage) }}
                     </div>
 
