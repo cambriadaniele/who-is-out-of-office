@@ -63,6 +63,10 @@ beforeEach(function (): void {
     $container->allows('get')->with('security.token_storage')->andReturn($tokenStorage);
     $container->allows('get')->with('security.authorization_checker')->andReturn($authChecker);
 
+    $this->userFacade = mock(App\Shared\Facade\UserFacadeInterface::class);
+    $this->userFacade->allows('remainingDaysFor')->andReturn($this->user->currentLeaveBalance);
+    $this->userFacade->allows('canBookDays')->andReturnUsing(fn (string $id, DateTimeImmutable $start, int $days) => $days <= $this->user->currentLeaveBalance);
+
     $this->component = new LeaveRequestForm(
         translator: $this->translator,
         leaveRequestFacade: $this->leaveRequestFacade,
@@ -85,7 +89,7 @@ it('shows warning and disables submit when start date violates minNoticeDays', f
         'dateRange' => sprintf('%s to %s', $startDate->format('Y-m-d'), $startDate->modify('+2 days')->format('Y-m-d')),
     ];
 
-    $this->component->updated($this->user, $this->leaveRequestFacade, $this->appSettingsFacade);
+    $this->component->updated($this->user, $this->leaveRequestFacade, $this->appSettingsFacade, $this->userFacade);
 
     expect($this->component->isSubmitDisabled)->toBeTrue()
         ->and($this->component->infoBox)->toContain('min_notice_box');
@@ -107,7 +111,7 @@ it('shows warning and disables submit when workdays exceed maxConsecutiveDays', 
 
     $this->leaveRequestFacade->allows('calculateWorkDays')->andReturn(10);
 
-    $this->component->updated($this->user, $this->leaveRequestFacade, $this->appSettingsFacade);
+    $this->component->updated($this->user, $this->leaveRequestFacade, $this->appSettingsFacade, $this->userFacade);
 
     expect($this->component->isSubmitDisabled)->toBeTrue()
         ->and($this->component->infoBox)->toContain('max_consecutive_box');
@@ -129,7 +133,7 @@ it('allows submit when within minNoticeDays and maxConsecutiveDays limits', func
 
     $this->leaveRequestFacade->allows('calculateWorkDays')->andReturn(3);
 
-    $this->component->updated($this->user, $this->leaveRequestFacade, $this->appSettingsFacade);
+    $this->component->updated($this->user, $this->leaveRequestFacade, $this->appSettingsFacade, $this->userFacade);
 
     expect($this->component->isSubmitDisabled)->toBeFalse();
 });
@@ -137,7 +141,7 @@ it('allows submit when within minNoticeDays and maxConsecutiveDays limits', func
 it('disables submit and clears info box when dateRange is empty', function (): void {
     $this->component->formValues = ['leaveType' => $this->balanceLeaveType->id->toString(), 'dateRange' => ''];
 
-    $this->component->updated($this->user, $this->leaveRequestFacade, $this->appSettingsFacade);
+    $this->component->updated($this->user, $this->leaveRequestFacade, $this->appSettingsFacade, $this->userFacade);
 
     expect($this->component->isSubmitDisabled)->toBeTrue()
         ->and($this->component->infoBox)->toBe('');
@@ -150,7 +154,7 @@ it('disables submit when leaveType is null and dateRange is provided', function 
         'dateRange' => $startDate->format('Y-m-d'),
     ];
 
-    $this->component->updated($this->user, $this->leaveRequestFacade, $this->appSettingsFacade);
+    $this->component->updated($this->user, $this->leaveRequestFacade, $this->appSettingsFacade, $this->userFacade);
 
     expect($this->component->isSubmitDisabled)->toBeTrue()
         ->and($this->component->infoBox)->toBe('');
@@ -168,7 +172,7 @@ it('enables submit when leaveType ID does not resolve to a known type', function
         'dateRange' => sprintf('%s to %s', $startDate->format('Y-m-d'), $startDate->modify('+2 days')->format('Y-m-d')),
     ];
 
-    $this->component->updated($this->user, $this->leaveRequestFacade, $this->appSettingsFacade);
+    $this->component->updated($this->user, $this->leaveRequestFacade, $this->appSettingsFacade, $this->userFacade);
 
     expect($this->component->isSubmitDisabled)->toBeFalse()
         ->and($this->component->infoBox)->toBe('');
@@ -190,7 +194,7 @@ it('enables submit immediately when leave type does not affect balance', functio
         'dateRange' => sprintf('%s to %s', $startDate->format('Y-m-d'), $startDate->modify('+2 days')->format('Y-m-d')),
     ];
 
-    $this->component->updated($this->user, $this->leaveRequestFacade, $this->appSettingsFacade);
+    $this->component->updated($this->user, $this->leaveRequestFacade, $this->appSettingsFacade, $this->userFacade);
 
     expect($this->component->isSubmitDisabled)->toBeFalse()
         ->and($this->component->infoBox)->toBe('');
@@ -212,7 +216,7 @@ it('shows no balance warning and disables submit when remaining balance is negat
 
     $this->leaveRequestFacade->allows('calculateWorkDays')->andReturn(25);
 
-    $this->component->updated($this->user, $this->leaveRequestFacade, $this->appSettingsFacade);
+    $this->component->updated($this->user, $this->leaveRequestFacade, $this->appSettingsFacade, $this->userFacade);
 
     expect($this->component->isSubmitDisabled)->toBeTrue()
         ->and($this->component->infoBox)->toContain('no_balance_box');
@@ -233,7 +237,7 @@ it('treats single date selection as same start and end date', function (): void 
 
     $this->leaveRequestFacade->allows('calculateWorkDays')->andReturn(1);
 
-    $this->component->updated($this->user, $this->leaveRequestFacade, $this->appSettingsFacade);
+    $this->component->updated($this->user, $this->leaveRequestFacade, $this->appSettingsFacade, $this->userFacade);
 
     expect($this->component->isSubmitDisabled)->toBeFalse();
 });

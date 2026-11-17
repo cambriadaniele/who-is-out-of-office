@@ -94,6 +94,9 @@ beforeEach(function (): void {
     $this->getBalanceStatementHandler = mock(GetBalanceStatementQueryHandler::class);
     $this->shouldRestoreBalanceForLeaveRequestHandler = mock(ShouldRestoreBalanceForLeaveRequestQueryHandler::class);
 
+    $this->yearlyBalanceHandler = mock(App\Module\User\UseCase\Query\YearlyBalanceQueryHandler::class);
+    $this->yearlyBalanceData = mock(App\Infrastructure\Doctrine\Repository\YearlyBalanceDataRepository::class);
+
     $this->facade = new UserFacade(
         recordBalanceChangeHandler: $this->recordBalanceChangeHandler,
         getMyTeamUsersHandler: $this->getMyTeamUsersHandler,
@@ -132,6 +135,8 @@ beforeEach(function (): void {
         getBalanceLedgerForUserHandler: $this->getBalanceLedgerForUserHandler,
         getBalanceStatementHandler: $this->getBalanceStatementHandler,
         shouldRestoreBalanceForLeaveRequestHandler: $this->shouldRestoreBalanceForLeaveRequestHandler,
+        yearlyBalanceHandler: $this->yearlyBalanceHandler,
+        yearlyBalanceData: $this->yearlyBalanceData,
     );
 });
 
@@ -579,4 +584,22 @@ it('delegates hasPendingInvitation to its handler', function (): void {
     $this->hasPendingInvitationHandler->expects('handle')->with($userId)->andReturn(true);
 
     expect($this->facade->hasPendingInvitation($userId))->toBeTrue();
+});
+
+
+it('delegates the per-year questions to the yearly balance handler', function (): void {
+    $day = new DateTimeImmutable('2027-03-01');
+    $this->yearlyBalanceHandler->expects('canBook')->once()->with('u1', $day, 3)->andReturn(true);
+    $this->yearlyBalanceHandler->expects('remainingFor')->once()->with('u1', $day)->andReturn(7);
+
+    expect($this->facade->canBookDays('u1', $day, 3))->toBeTrue()
+        ->and($this->facade->remainingDaysFor('u1', $day))->toBe(7);
+});
+
+it('stores corrections and allowances for future years in the yearly data', function (): void {
+    $this->yearlyBalanceData->expects('addAdjustment')->once()->with('u1', 2027, 2, 'why', 'admin');
+    $this->yearlyBalanceData->expects('setAllowance')->once()->with('u1', 2027, null);
+
+    $this->facade->addFutureYearCorrection('u1', 2027, 2, 'why', 'admin');
+    $this->facade->setYearAllowance('u1', 2027, null);
 });

@@ -38,6 +38,7 @@ it('saves leave request and updates user balance when leave type affects balance
     );
 
     $workDaysNumber = 4;
+    $this->userFacade->expects('canBookDays')->once()->with('user-123', $command->startDate, 4)->andReturn(true);
 
     $writeOrder = [];
 
@@ -185,6 +186,8 @@ it('rolls back transaction when balance update fails', function () {
     $workDaysNumber = 3;
     $expectedException = new RuntimeException('Balance update failed');
 
+    $this->userFacade->allows('canBookDays')->andReturn(true);
+
     $this->repository
         ->expects('beginTransaction')
         ->once();
@@ -229,3 +232,23 @@ it('rolls back transaction when balance update fails', function () {
     expect(fn () => $this->handler->handle($command, $workDaysNumber))
         ->toThrow(RuntimeException::class, 'Balance update failed');
 });
+
+
+it('rolls back and books nothing when the year of the booking has too few days', function () {
+    $userDTO = UserDTOFixture::create(['id' => 'user-123']);
+    $command = new SaveLeaveRequestCommand(
+        leaveRequestTypeDTO: LeaveRequestTypeDTOFixture::create(['isAffectingBalance' => true]),
+        startDate: new DateTimeImmutable('2027-03-01'),
+        endDate: new DateTimeImmutable('2027-03-05'),
+        userDTO: $userDTO
+    );
+
+    $this->repository->expects('beginTransaction')->once();
+    $this->repository->expects('saveLeaveRequest')->once();
+    $this->userFacade->expects('canBookDays')->once()->andReturn(false);
+    $this->userFacade->expects('recordBalanceChange')->never();
+    $this->repository->expects('rollback')->once();
+    $this->repository->expects('discardPending')->once();
+
+    $this->handler->handle($command, 5);
+})->throws(App\Shared\Exception\InsufficientLeaveBalanceException::class);

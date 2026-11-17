@@ -68,6 +68,21 @@ class RecordBalanceChangeCommandHandler
         $recordedAt = new \DateTimeImmutable();
         $leavePeriodDTO = $this->resolvePeriod($userDTO, $command, $recordedAt);
 
+        // Fork: after a catch-up over several missed years the balance has changed, so what is forfeited has to be worked out now.
+        if (null !== $command->yearAllowance
+            && BalanceLedgerEntryTypeEnum::Accrual === $command->type
+            && BalanceLedgerSourceEnum::Scheduler === $command->source) {
+            $forfeited = $this->yearlyBalanceData->forfeitedAt($userDTO->id, $userDTO->currentLeaveBalance, $leavePeriodDTO->startDate);
+            $command = new RecordBalanceChangeCommand(
+                userId: $command->userId,
+                delta: $command->yearAllowance - $forfeited,
+                type: $command->type,
+                source: $command->source,
+                reason: $forfeited > 0 ? sprintf('Jahresanspruch %d, nicht bezogene Tage verfallen: %d', $command->yearAllowance, $forfeited) : null,
+                yearAllowance: $command->yearAllowance,
+            );
+        }
+
         $this->recordInPeriod($userDTO, $leavePeriodDTO, $command, $recordedAt);
     }
 

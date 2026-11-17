@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Infrastructure\Doctrine\Repository\YearlyBalanceDataRepository;
 use App\Module\User\Repository\BalanceLedgerEntryRepositoryInterface;
 use App\Module\User\Repository\LeavePeriodRepositoryInterface;
 use App\Module\User\Repository\UserBalanceWriterInterface;
@@ -35,6 +36,7 @@ beforeEach(function (): void {
         openInitialLeavePeriodHandler: $this->openInitialLeavePeriodHandler,
         openLeavePeriodHandler: $this->openLeavePeriodHandler,
         closeLeavePeriodHandler: $this->closeLeavePeriodHandler,
+        yearlyBalanceData: mock(YearlyBalanceDataRepository::class),
     );
 });
 

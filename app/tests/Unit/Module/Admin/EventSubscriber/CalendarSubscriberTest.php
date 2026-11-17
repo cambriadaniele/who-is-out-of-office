@@ -49,6 +49,17 @@ beforeEach(function (): void {
         urlGenerator: $this->urlGenerator,
         security: $this->security,
         translator: $this->translator,
+        dateLocalizer: new App\Shared\Service\DateLocalizer(new class implements Symfony\Contracts\Translation\LocaleAwareInterface {
+            public function getLocale(): string
+            {
+                return 'en';
+            }
+
+            public function setLocale(string $locale): void
+            {
+            }
+        }),
+        connection: calendarSchoolHolidayConnection(),
     );
 });
 
@@ -484,6 +495,17 @@ it('translates county codes in public holiday events', function (): void {
         urlGenerator: $this->urlGenerator,
         security: $this->security,
         translator: $translator,
+        dateLocalizer: new App\Shared\Service\DateLocalizer(new class implements Symfony\Contracts\Translation\LocaleAwareInterface {
+            public function getLocale(): string
+            {
+                return 'en';
+            }
+
+            public function setLocale(string $locale): void
+            {
+            }
+        }),
+        connection: calendarSchoolHolidayConnection(),
     );
 
     $event = createSetDataEvent(new DateTime('2026-06-01'), new DateTime('2026-06-30'));
@@ -553,4 +575,51 @@ it('marks non-working days as background events', function (): void {
     $offDay = array_values($offDayEvents)[0];
     expect($offDay->getOptions()['display'])->toBe('background')
         ->and($offDay->getOptions()['allDay'])->toBeTrue();
+});
+
+
+/** @param list<array<string, string>> $rows */
+function calendarSchoolHolidayConnection(array $rows = []): Doctrine\DBAL\Connection
+{
+    $connection = mock(Doctrine\DBAL\Connection::class);
+    $connection->allows('fetchAllAssociative')->andReturn($rows);
+
+    return $connection;
+}
+
+it('adds school holidays as information bars for everybody', function (): void {
+    $this->subscriber = new CalendarSubscriber(
+        leaveRequestFacade: $this->leaveRequestFacade,
+        userFacade: $this->userFacade,
+        holidayFacade: $this->holidayFacade,
+        urlGenerator: $this->urlGenerator,
+        security: $this->security,
+        translator: $this->translator,
+        dateLocalizer: new App\Shared\Service\DateLocalizer(new class implements Symfony\Contracts\Translation\LocaleAwareInterface {
+            public function getLocale(): string
+            {
+                return 'en';
+            }
+
+            public function setLocale(string $locale): void
+            {
+            }
+        }),
+        connection: calendarSchoolHolidayConnection([
+            ['group_name' => 'Schulferien BFS', 'name' => 'Sportferien', 'start_date' => '2027-02-08', 'end_date' => '2027-02-21'],
+        ]),
+    );
+    $this->leaveRequestFacade->expects('getLeaveRequestsForDates')->andReturn([]);
+    $this->userFacade->allows('getUsersWithBirthdaysForDates')->andReturn([]);
+    $this->holidayFacade->allows('getHolidayCalendarForCountry');
+
+    $event = createSetDataEvent(new DateTime('2027-02-01'), new DateTime('2027-03-01'));
+    $this->subscriber->onCalendarSetData($event);
+
+    $titles = array_map(static fn ($e) => $e->getTitle(), array_filter($event->getEvents(), static fn ($e) => str_starts_with($e->getTitle(), '🏫')));
+
+    expect(array_values($titles))->toBe(['🏫 Sportferien']);
+    $bar = array_values(array_filter($event->getEvents(), static fn ($e) => str_starts_with($e->getTitle(), '🏫')))[0];
+    // FullCalendar end dates are exclusive: the 21st must be inside the bar.
+    expect($bar->getEnd()->format('Y-m-d'))->toBe('2027-02-22');
 });

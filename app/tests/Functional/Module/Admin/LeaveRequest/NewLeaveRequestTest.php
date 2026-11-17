@@ -56,7 +56,7 @@ it('calculates workdays and submit a new request', function (): void {
     expect($infoBoxHtml)
         ->toContain((string) $expectedWorkdays)
         ->toContain('workdays will be taken')
-        ->toContain('Remaining balance:')
+        ->toContain('That leaves')
         ->toContain((string) $expectedRemainingBalance);
 
     $submitButton = $client->getCrawler()->filter('#submit-btn');
@@ -74,6 +74,8 @@ it('calculates workdays and submit a new request', function (): void {
 });
 
 it('shows a translated error when the locked balance became insufficient after validation', function (): void {
+    // Fork: the check is per year inside the booking transaction (SaveLeaveRequestCommandHandlerTest); the pot is no longer the limit.
+    test()->markTestSkipped('Replaced by the per-year check in SaveLeaveRequestCommandHandlerTest.');
     $client = static::createClient();
     $client->disableReboot();
     $container = $client->getContainer();

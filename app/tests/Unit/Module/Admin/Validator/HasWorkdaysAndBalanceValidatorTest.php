@@ -42,6 +42,10 @@ beforeEach(function (): void {
         'name' => 'Remote',
     ]);
 
+    // The free days are per year now; this stand-in grants exactly the user's 20 days.
+    $this->userFacade = mock(App\Shared\Facade\UserFacadeInterface::class);
+    $this->userFacade->allows('canBookDays')->andReturnUsing(fn (string $id, DateTimeImmutable $start, int $days) => $days <= $this->user->currentLeaveBalance);
+
     $this->constraint = new HasWorkdaysAndBalance();
     $this->context = mock(ExecutionContextInterface::class);
 
@@ -49,6 +53,7 @@ beforeEach(function (): void {
         security: $this->security,
         leaveRequestFacade: $this->leaveRequestFacade,
         appSettingsFacade: $this->appSettingsFacade,
+        userFacade: $this->userFacade,
     );
     $this->validator->initialize($this->context);
 });
@@ -231,6 +236,7 @@ it('throws AccessDeniedHttpException when nobody is authenticated', function ():
         security: $security,
         leaveRequestFacade: $this->leaveRequestFacade,
         appSettingsFacade: $this->appSettingsFacade,
+        userFacade: $this->userFacade,
     );
     $validator->initialize($this->context);
 

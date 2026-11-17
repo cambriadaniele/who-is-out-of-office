@@ -146,6 +146,7 @@
             "php bin/console doctrine:database:drop --if-exists --force --env=test",
             "php bin/console doctrine:database:create --env=test",
             "php bin/console doctrine:schema:update --force --env=test",
+            "php bin/console doctrine:migrations:execute --up --no-interaction --env=test 'DoctrineMigrations\\Version20261116120000' 'DoctrineMigrations\\Version20261116190000'",
             "php bin/console doctrine:fixtures:load --no-interaction --env=test"
         ]
     },

@@ -117,6 +117,7 @@ class ResetAbsenceBalanceCommandHandler
                 type: BalanceLedgerEntryTypeEnum::Accrual,
                 source: BalanceLedgerSourceEnum::Scheduler,
                 reason: $forfeited > 0 ? sprintf('Jahresanspruch %d, nicht bezogene Tage verfallen: %d', $allowance, $forfeited) : null,
+                yearAllowance: $allowance,
             ));
 
             $updatedUserDTO = $this->userRepository->findOneByIdForUpdate($userDTO->id);

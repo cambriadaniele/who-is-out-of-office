@@ -37,3 +37,19 @@ based on upstream commit `e6be329`. Changes on top of upstream:
 Not translated: Slack messages.
 
 The test suite has not been run against these changes.
+
+## Tests for the fork's changes
+
+Added with the per-year vacation days, so that the next change does not break them silently:
+
+- `tests/Unit/Module/User/Service/YearlyBalanceCalculatorTest.php`: the year arithmetic, no carry-over, 1 January 2027/2028.
+- `tests/Functional/Module/User/YearlyVacationBalanceTest.php`: bookings per year, refusal beyond a year's allowance, corrections in advance, year-end forfeiting, new accounts at 0.
+- `tests/Functional/Module/Admin/UserVacationDaysControllerTest.php`: "Ferientage verwalten" (admin only, CSRF, reason required).
+- `tests/Functional/Module/Admin/ProfilePhotoUploadTest.php`, `tests/Unit/Module/Admin/UserProfileDTOValidationTest.php`, `tests/Unit/Infrastructure/Config/ProductionUploadLimitsTest.php`: photo upload (form, size limit, PHP/nginx limits agree).
+- `tests/Functional/Module/Admin/PhoneLayoutBrowserTest.php`: real browser at 375 px: calendar filter lists and long e-mail addresses in the person cards.
+- `tests/Functional/Module/Admin/SchoolHolidayCalendarTest.php`, `tests/Unit/Shared/Service/DateLocalizerTest.php`.
+
+The test database is built with the production collation and the fork's migrations (`composer reset-test-db`).
+Two bugs these tests found: dates with a fixed offset (`+00:00`) crashed `DateLocalizer`, and a multi-year catch-up
+of the yearly reset carried days over instead of forfeiting them.
+Known: `PasswordResetTest` can time out when the whole functional suite runs in one go (passes on its own; cause not found).

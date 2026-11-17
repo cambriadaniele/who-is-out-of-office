@@ -9,7 +9,22 @@ use App\Tests\_fixtures\Shared\DTO\LeaveRequest\LeaveRequestTypeDTOFixture;
 use App\Tests\_fixtures\Shared\DTO\UserDTOFixture;
 
 beforeEach(function (): void {
-    $this->builder = new IcalCalendarBuilder();
+    $translator = new class implements Symfony\Contracts\Translation\TranslatorInterface, Symfony\Contracts\Translation\LocaleAwareInterface {
+        public function trans(string $id, array $parameters = [], ?string $domain = null, ?string $locale = null): string
+        {
+            return [] === $parameters ? $id : (string) reset($parameters);
+        }
+
+        public function getLocale(): string
+        {
+            return 'en';
+        }
+
+        public function setLocale(string $locale): void
+        {
+        }
+    };
+    $this->builder = new IcalCalendarBuilder(new App\Shared\Service\DateLocalizer($translator), $translator);
 });
 
 it('returns a valid empty calendar when both lists are empty', function (): void {

@@ -35,6 +35,10 @@ class DateLocalizer
     {
         $locale ??= $this->translator->getLocale();
         $timezone = $date->getTimezone()->getName();
+        // A date with a fixed offset ("+00:00", as in ATOM strings) has no zone name; ICU wants "GMT+00:00".
+        if (preg_match('/^[+-]\d{2}:?\d{2}$/', $timezone)) {
+            $timezone = 'GMT'.$timezone;
+        }
         $key = sprintf('%s|%s|%s', $locale, $style, $timezone);
 
         $this->formatters[$key] ??= new \IntlDateFormatter(

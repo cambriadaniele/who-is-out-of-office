@@ -9,6 +9,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\Exception\TransportException;
 use Symfony\Component\Mailer\MailerInterface;
+use App\Shared\Facade\UserFacadeInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -18,6 +19,8 @@ beforeEach(function (): void {
     $this->translator = mock(TranslatorInterface::class);
     $this->translator->allows('trans')->andReturnUsing(fn (string $id) => $id);
     $this->logger = mock(LoggerInterface::class);
+    $this->userFacade = mock(UserFacadeInterface::class);
+    $this->userFacade->allows('remainingDaysFor')->andReturn(10);
 
     $this->handler = new SendLeaveRequestApprovedEmailCommandHandler(
         emailFromAddress: 'noreply@whosooo.com',
@@ -26,6 +29,7 @@ beforeEach(function (): void {
         urlGenerator: $this->urlGenerator,
         translator: $this->translator,
         logger: $this->logger,
+        userFacade: $this->userFacade,
     );
 });
 

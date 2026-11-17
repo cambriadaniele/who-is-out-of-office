@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Infrastructure\Doctrine\Repository\YearlyBalanceDataRepository;
 use App\Module\User\Repository\UserRepositoryInterface;
 use App\Module\User\Repository\LeavePeriodRepositoryInterface;
 use App\Module\User\Repository\UserBalanceWriterInterface;
@@ -26,6 +27,10 @@ beforeEach(function (): void {
     $this->openLeavePeriodHandler = mock(OpenLeavePeriodCommandHandler::class);
     $this->recordBalanceChangeHandler = mock(RecordBalanceChangeCommandHandler::class);
     $this->logger = mock(LoggerInterface::class);
+    // Fork, no carry-over: 3 unused days are forfeited and the new year is granted in full.
+    $this->yearlyBalanceData = mock(YearlyBalanceDataRepository::class);
+    $this->yearlyBalanceData->allows('forfeitedAt')->andReturn(3)->byDefault();
+    $this->yearlyBalanceData->allows('allowanceForYear')->andReturn(24)->byDefault();
     $this->logger->allows('info');
     $this->logger->allows('error');
     $this->leavePeriodRepository->expects('findOpenForUser')->zeroOrMoreTimes()->andReturn(null)->byDefault();
@@ -37,11 +42,12 @@ beforeEach(function (): void {
         closeLeavePeriodHandler: $this->closeLeavePeriodHandler,
         openLeavePeriodHandler: $this->openLeavePeriodHandler,
         recordBalanceChangeHandler: $this->recordBalanceChangeHandler,
+        yearlyBalanceData: $this->yearlyBalanceData,
         logger: $this->logger,
     );
 });
 
-it('delegates the complete rollover and accrual to the locked balance funnel', function () {
+it('grants the new year in full and forfeits the unused days through the locked balance funnel', function () {
     $resetDay = new DateTimeImmutable('today');
     $user = UserDTOFixture::create([
         'annualLeaveAllowance' => 24,
@@ -63,7 +69,8 @@ it('delegates the complete rollover and accrual to the locked balance funnel', f
         ->expects('handle')
         ->once()
         ->withArgs(fn (RecordBalanceChangeCommand $command): bool => $command->userId === $user->id
-            && 24 === $command->delta
+            && 21 === $command->delta
+            && str_contains((string) $command->reason, 'verfallen')
             && BalanceLedgerEntryTypeEnum::Accrual === $command->type
             && BalanceLedgerSourceEnum::Scheduler === $command->source
             && null === $command->actorUserId);

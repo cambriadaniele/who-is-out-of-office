@@ -76,11 +76,15 @@ function buildInvitationDTO(): InvitationDTO
     );
 }
 
-it('throws 404 when invitation token is not found', function (): void {
+// Fork: an already used (or unknown) link no longer shows a 404, it sends the person to the login page.
+it('sends people with a used or unknown invitation link to the login page', function (): void {
     $this->invitationRepository->expects('findOneByToken')->with('invalid-token')->andReturn(null);
 
-    ($this->controller)('invalid-token', Request::create('/invitation/invalid-token'));
-})->throws(NotFoundHttpException::class);
+    $response = ($this->controller)('invalid-token', Request::create('/invitation/invalid-token'));
+
+    expect($response)->toBeInstanceOf(Symfony\Component\HttpFoundation\RedirectResponse::class)
+        ->and($response->getTargetUrl())->toBe('/redirect-url');
+});
 
 it('renders invitation form on GET request', function (): void {
     $this->invitationRepository->expects('findOneByToken')->andReturn(buildInvitationDTO());

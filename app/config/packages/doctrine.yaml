@@ -35,3 +35,12 @@ when@prod:
                     adapter: cache.app
                 doctrine.system_cache_pool:
                     adapter: cache.system
+
+when@test:
+    doctrine:
+        dbal:
+            # Fork: the production tables are utf8mb4_unicode_ci; the fork's tables have foreign keys to them,
+            # which MySQL only accepts when the collations match.
+            default_table_options:
+                charset: utf8mb4
+                collation: utf8mb4_unicode_ci

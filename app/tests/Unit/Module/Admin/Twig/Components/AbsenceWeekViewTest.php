@@ -8,7 +8,16 @@ use App\Shared\Facade\LeaveRequestFacadeInterface;
 
 beforeEach(function (): void {
     $this->leaveRequestFacade = mock(LeaveRequestFacadeInterface::class);
-    $this->component = new AbsenceWeekView($this->leaveRequestFacade);
+    $this->component = new AbsenceWeekView($this->leaveRequestFacade, new App\Shared\Service\DateLocalizer(new class implements Symfony\Contracts\Translation\LocaleAwareInterface {
+        public function getLocale(): string
+        {
+            return 'en';
+        }
+
+        public function setLocale(string $locale): void
+        {
+        }
+    }));
 });
 
 it('defaults to current monday when weekStart is null', function (): void {
@@ -74,7 +83,8 @@ it('reports isCurrentWeek as false when weekStart is in a different week', funct
 it('formats date range within a single month as compact range', function (): void {
     $this->component->weekStart = '2026-04-13';
 
-    expect($this->component->getFormattedDateRange())->toBe('Apr 13–17, 2026');
+    // Fork: start and end are formatted separately.
+    expect($this->component->getFormattedDateRange())->toMatch('/^Apr\s?13 – Apr\s?17,? 2026$/u');
 });
 
 it('formats date range spanning two months with both month labels', function (): void {

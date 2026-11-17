@@ -82,7 +82,8 @@ it('grants the new-user allowance exactly once when reset is already due', funct
 
     expect($entries)->toHaveCount(1)
         ->and($reloaded->currentLeaveBalance)->toBe($balanceAfterReset - 1)
-        ->and($balanceAfterReset)->toBe(48);
+        // Fork, no carry-over: the 24 unused days are forfeited and the new year is exactly the allowance.
+        ->and($balanceAfterReset)->toBe(24);
 });
 
 it('books through the facade without accruing when reset day is on account creation', function (): void {
@@ -229,11 +230,11 @@ it('closes the period opens the next one and records accrual on reset', function
             ->and($newest->openingBalance)->toBe(13)
             ->and($newest->startDate->format('Y-m-d'))->toBe($today->format('Y-m-d'))
             ->and($accruals)->toHaveCount(1)
-            ->and($accruals[0]->delta)->toBe(27)
+            ->and($accruals[0]->delta)->toBe(14)  // allowance 27 minus the 13 forfeited days
             ->and($accruals[0]->source)->toBe(BalanceLedgerSourceEnum::Scheduler)
             ->and($accruals[0]->leavePeriod->id->toString())->toBe($newest->id->toString())
             ->and($reloaded)->toBeInstanceOf(User::class)
-            ->and($reloaded->currentLeaveBalance)->toBe(40)
+            ->and($reloaded->currentLeaveBalance)->toBe(27)
             ->and($reloaded->absenceBalanceResetDay->format('Y-m-d'))->toBe($today->modify('+1 year')->format('Y-m-d'));
     } finally {
         $this->entityManager->clear();
@@ -286,7 +287,7 @@ it('rolls an expired period before recording the first reset-day change', functi
         ->and($usage)->toBeInstanceOf(BalanceLedgerEntry::class)
         ->and($usage->leavePeriod->id->toString())->toBe($periods[1]->id->toString())
         ->and($reloaded)->toBeInstanceOf(User::class)
-        ->and($reloaded->currentLeaveBalance)->toBe(25)
+        ->and($reloaded->currentLeaveBalance)->toBe(22)  // 24 granted (3 forfeited), 2 used
         ->and($reloaded->absenceBalanceResetDay->format('Y-m-d'))->toBe($today->modify('+1 year')->format('Y-m-d'));
 });
 
@@ -360,10 +361,10 @@ it('grants every missed allowance during a multi-year scheduled catch-up', funct
 
         expect($periods)->toHaveCount(3)
             ->and($accruals)->toHaveCount(2)
-            ->and(array_map(fn (BalanceLedgerEntry $entry): int => $entry->delta, $accruals))->toBe([24, 24])
+            ->and(array_map(fn (BalanceLedgerEntry $entry): int => $entry->delta, $accruals))->toBe([21, 0])  // 3 forfeited in the first year, all 24 forfeited in the second (no carry-over, also in a catch-up)
             ->and($accruals[0]->getCreatedAt()->format('Y-m-d'))->toBe($firstMissedReset->format('Y-m-d'))
             ->and($reloaded)->toBeInstanceOf(User::class)
-            ->and($reloaded->currentLeaveBalance)->toBe(51)
+            ->and($reloaded->currentLeaveBalance)->toBe(24)
             ->and($reloaded->absenceBalanceResetDay->format('Y-m-d'))->toBe($firstMissedReset->modify('+2 years')->format('Y-m-d'));
     } finally {
         $this->entityManager->clear();

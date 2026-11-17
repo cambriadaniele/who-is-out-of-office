@@ -28,13 +28,14 @@ it('displays the invitation form for a valid token', function (): void {
         ->toContain('Create Account');
 });
 
-it('returns 404 for an invalid token', function (): void {
+it('sends an invalid or used invitation link to the login page with a hint', function (): void {
     $client = createPantherClient();
     $client->request('GET', '/invitation/invalid-token-that-does-not-exist');
 
     $content = $client->getCrawler()->text();
 
-    expect($content)->toContain('NotFoundHttpException');
+    // Fork: no 404 any more, people who already set their password land on the login page.
+    expect($content)->toContain('already been used')->toContain('Sign in');
 });
 
 it('completes the invitation and activates the user account', function (): void {
