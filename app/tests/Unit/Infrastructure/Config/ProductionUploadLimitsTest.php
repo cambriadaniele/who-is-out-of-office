@@ -35,7 +35,7 @@ function repoFile(string $relative): string
 
 it('lets production PHP accept the photo size the form allows', function (): void {
     $ini = parse_ini_string(repoFile('docker/php/conf/php.prod.ini'));
-    $dto = repoFile('app/src/Module/Admin/DTO/UserProfileDTO.php');
+    $dto = (string) file_get_contents(dirname(__DIR__, 4).'/src/Module/Admin/DTO/UserProfileDTO.php');
     preg_match("/maxSize: '(\d+[KMG])'/", $dto, $match);
 
     expect($match)->not->toBeEmpty()
@@ -53,4 +53,15 @@ it('lets nginx pass a request that large', function (): void {
 
 it('copies the production ini into the production image', function (): void {
     expect(repoFile('docker/php/Dockerfile'))->toContain('docker/php/conf/php.prod.ini /usr/local/etc/php/conf.d/');
+});
+
+it('tells people the same photo limit the form enforces', function (): void {
+    preg_match("/maxSize: '(\d+)M'/", (string) file_get_contents(dirname(__DIR__, 4).'/src/Module/Admin/DTO/UserProfileDTO.php'), $limit);
+
+    foreach (['de', 'en'] as $locale) {
+        $yaml = (string) file_get_contents(sprintf('%s/translations/admin.%s.yaml', dirname(__DIR__, 4), $locale));
+        preg_match('/profile_image_help: .*?(\d+) MB/', $yaml, $hint);
+
+        expect($hint[1] ?? null)->toBe($limit[1]);
+    }
 });

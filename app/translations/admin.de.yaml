@@ -463,7 +463,7 @@ crud:
             is_email_notifications_enabled: E-Mail-Benachrichtigungen erhalten
             is_email_notifications_enabled_help: Wenn aktiviert, erhältst du E-Mails zu Änderungen an deinen Anträgen.
             profile_image: Profilbild
-            profile_image_help: 'JPEG, PNG oder WebP. Höchstens 2 MB.'
+            profile_image_help: 'JPEG, PNG oder WebP. Höchstens 15 MB.'
             profile_image_change: 'Foto ändern'
             profile_image_remove: Entfernen
         action:
