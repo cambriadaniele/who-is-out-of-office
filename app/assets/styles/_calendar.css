@@ -627,7 +627,9 @@
         max-width: none;
     }
 
-    .cal-multiselect-dropdown {
+    /* Fork: bottom sheet on phones. The general .cal-multiselect-dropdown rule further down used to win
+       (same weight, later in the file) and gave the sheet zero height, so nothing showed. */
+    .cal-filter-bar .cal-multiselect-dropdown {
         position: fixed;
         top: auto;
         bottom: 0;
@@ -635,8 +637,18 @@
         right: 0;
         min-width: 100%;
         max-height: 60vh;
+        padding-bottom: env(safe-area-inset-bottom);
         border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-        z-index: 200;
+        z-index: 1100;
+    }
+
+    .cal-filter-bar .cal-multiselect-dropdown .cal-multiselect-options {
+        overflow-y: auto;
+    }
+
+    .cal-filter-bar .cal-multiselect-option {
+        padding-top: 12px;
+        padding-bottom: 12px;
     }
 }
 

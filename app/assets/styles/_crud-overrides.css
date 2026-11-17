@@ -390,6 +390,9 @@ html.dark body.ea .datagrid .table > tbody > tr > td .icon svg {
         font-size: 14px;
         color: var(--text-primary);
         text-align: left !important;
+        /* long e-mail addresses must wrap inside their half of the card */
+        overflow-wrap: anywhere;
+        word-break: break-word;
     }
 
     /* label above the value */
